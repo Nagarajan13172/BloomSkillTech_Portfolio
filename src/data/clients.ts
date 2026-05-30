@@ -25,6 +25,17 @@ export interface Client {
  */
 export const CLIENTS: Client[] = [
   {
+    name: 'SucceedEx',
+    domain: 'succeedex.in',
+    href: 'https://succeedex.in',
+    initials: 'Sx',
+    service: 'EdTech platform · assessments & placement',
+    quote:
+      'Bloomskill Tech engineered the platform behind SucceedEx — AI-powered assessments, fraud-free proctoring and a transparent placement pipeline that now guides thousands of students from classroom to career. They turned an ambitious vision into reliable, daily-use infrastructure our colleges depend on.',
+    by: 'SucceedEx Team',
+    image: '/clients/succeedex.jpg',
+  },
+  {
     name: 'Onfleek',
     domain: 'onfleek.in',
     href: 'https://onfleek.in',

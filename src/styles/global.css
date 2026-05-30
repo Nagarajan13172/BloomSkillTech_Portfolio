@@ -3329,3 +3329,135 @@ a.spot-id:hover .dom {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   ACHIEVEMENTS — CTF result cards (wins highlighted gold)
+   ============================================================ */
+.ctf-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 46px;
+  position: relative;
+  z-index: 1;
+}
+.ctf-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.ctf-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 50px -30px rgba(89, 73, 166, 0.45);
+}
+.ctf-card--win {
+  border-color: transparent;
+  box-shadow: 0 0 0 1px rgba(224, 163, 46, 0.55), 0 18px 40px -28px rgba(224, 163, 46, 0.4);
+}
+.ctf-card--win::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(100deg, #f5c451, #e0a32e);
+}
+.ctf-card--win:hover {
+  box-shadow: 0 0 0 1px rgba(224, 163, 46, 0.7), 0 26px 50px -28px rgba(224, 163, 46, 0.5);
+}
+.ctf-champ {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: var(--fm);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: linear-gradient(100deg, #f5c451, #e0a32e);
+  color: #2a1e00;
+}
+.ctf-card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ctf-card--win .ctf-card-head {
+  padding-right: 96px;
+}
+.ctf-card-head h3 {
+  margin: 0;
+}
+.ctf-year {
+  color: var(--muted);
+  font-weight: 500;
+}
+.ctf-org {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.ctf-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ctf-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 13px;
+  background: var(--bg2);
+  border-radius: 11px;
+}
+.ctf-round {
+  font-size: 0.74rem;
+  color: var(--ink2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ctf-rank {
+  font-family: var(--fm);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ctf-rank--podium {
+  background: var(--card);
+  color: var(--ink);
+}
+.ctf-rank--gold {
+  background: linear-gradient(100deg, #f5c451, #e0a32e);
+  color: #2a1e00;
+  border: none;
+  box-shadow: 0 4px 14px -4px rgba(224, 163, 46, 0.6);
+}
+.ctf-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.ctf-cards + .ctf-team {
+  margin-top: 30px;
+}
+@media (max-width: 900px) {
+  .ctf-cards {
+    grid-template-columns: 1fr;
+  }
+}

@@ -74,9 +74,9 @@ export function Home() {
               </div>
               <div>
                 <strong>
-                  13<sup>th</sup>
+                  1<sup>st</sup>
                 </strong>
-                <span>yukthi ctf '24</span>
+                <span>yukthi ctf '25</span>
               </div>
               <div>
                 <strong>6+</strong>
@@ -100,8 +100,8 @@ export function Home() {
             </div>
             <div className="hero-figure-card">
               <img
-                src="/hero-bst.jpg"
-                alt="The Bloomskill Tech team engineering digital products"
+                src="/hero-studio.jpg"
+                alt="Bloomskill Tech engineers building digital products"
               />
               <span className="hero-figure-tag mono">// digital engineering studio · est. 2022</span>
             </div>

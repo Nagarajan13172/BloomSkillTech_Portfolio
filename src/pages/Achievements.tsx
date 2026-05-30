@@ -4,9 +4,55 @@ import { IMG } from '../data/images'
 
 const STATS = [
   { value: '6+', label: 'workshops led' },
-  { value: '5', label: 'partner colleges' },
   { value: '250+', label: 'CTF teams faced' },
-  { value: 'Top 25', label: "Yukthi CTF '24" },
+  { value: '2×', label: 'CTF titles' },
+  { value: '1st', label: "Yukthi CTF '25" },
+]
+
+interface CtfResult {
+  round: string
+  place: string
+  win?: boolean
+}
+interface Ctf {
+  name: string
+  year?: string
+  org: string
+  win?: boolean
+  results: CtfResult[]
+  note: string
+}
+
+const CTF: Ctf[] = [
+  {
+    name: 'Yukthi CTF',
+    year: '2025',
+    org: 'TN Police · Selfmade Ninja Academy',
+    win: true,
+    results: [
+      { round: 'Prelims', place: '1st', win: true },
+      { round: 'Finals', place: '3rd' },
+    ],
+    note: 'Topped the preliminary round outright, then finished on the podium in the grand finals.',
+  },
+  {
+    name: 'Tom-CTF',
+    year: '2025',
+    org: 'Selfmade Ninja · TN Police',
+    win: true,
+    results: [{ round: 'Grand Finals', place: '1st', win: true }],
+    note: 'Champions — a clean first-place finish in the grand finals.',
+  },
+  {
+    name: 'Yukthi CTF',
+    year: '2024',
+    org: 'TN Police · Selfmade Ninja Academy',
+    results: [
+      { round: 'Prelims', place: '13th' },
+      { round: 'Finals', place: '16th' },
+    ],
+    note: 'Our national debut — a top-25 finish among 250+ teams and 1,000+ participants.',
+  },
 ]
 
 interface Workshop {
@@ -161,58 +207,55 @@ export function Achievements() {
         </div>
       </section>
 
-      {/* ===== YUKTHI CTF ===== */}
+      {/* ===== CTF / COMPETITIONS ===== */}
       <section className="sec ctf">
-        <div className="wrap ctf-grid">
-          <div className="ctf-copy reveal">
-            <span className="eyebrow">02 / yukthi ctf 2024</span>
-            <h2 className="h2" style={{ marginTop: 14 }}>
-              Shining in the cybersecurity arena.
-            </h2>
-            <p>
-              Organised by the Tamil Nadu Police Department with Selfmade Ninja Academy, Yukthi CTF
-              2024 drew over 250 teams and 1,000+ participants in the preliminary round alone.
+        <div className="wrap">
+          <div className="shead reveal">
+            <span className="eyebrow">02 / capture the flag</span>
+            <h2 className="h2">From a top-25 debut to back-to-back titles.</h2>
+            <p className="lede">
+              Competitive cybersecurity is where we sharpen our edge — reverse engineering,
+              exploitation, crypto and forensics under the clock. Lately, we’ve been winning.
             </p>
-            <p>
-              Against formidable competition, Bloomskill Tech secured <strong>13th place</strong> in
-              the prelims — a coveted spot among the top 25 — then advanced to the finals at Saveetha
-              Engineering College, finishing <strong>16th among the top 25 finalists</strong>.
-            </p>
-            <p className="ctf-team">team · Bhadrinathan A · Prithivi</p>
           </div>
 
-          <div className="console reveal d1">
-            <div className="console-bar">
-              <span className="console-dot r" />
-              <span className="console-dot y" />
-              <span className="console-dot g" />
-              <span className="console-title">yukthi_ctf_2024 — results</span>
-            </div>
-            <div className="console-body">
-              <div>
-                <span className="pmt">$</span> ./scoreboard --team bloomskill
-              </div>
-              <div className="dim">parsing 250+ teams · 1000+ participants</div>
-              <div>&nbsp;</div>
-              <div>
-                <span className="key">round</span> prelims&nbsp;&nbsp;→ <span className="grn">rank 13</span>{' '}
-                <span className="dim">(top 25)</span>
-              </div>
-              <div>
-                <span className="key">round</span> finals&nbsp;&nbsp;&nbsp;→ <span className="grn">rank 16</span>{' '}
-                <span className="dim">(top 25)</span>
-              </div>
-              <div>&nbsp;</div>
-              <div>
-                <span className="grn">✔ qualified to finals @ Saveetha Engg.</span>
-              </div>
-              <div>
-                <span className="pmt">$</span> <span className="dim">status:</span>{' '}
-                excellence_in_cybersecurity
-                <span className="cursor" />
-              </div>
-            </div>
+          <div className="ctf-cards">
+            {CTF.map((c, idx) => (
+              <article
+                key={c.name + (c.year ?? '')}
+                className={`ctf-card reveal${idx ? ` d${idx}` : ''}${c.win ? ' ctf-card--win' : ''}`}
+              >
+                {c.win && <span className="ctf-champ">★ champions</span>}
+                <div className="ctf-card-head">
+                  <h3 className="h3">
+                    {c.name}
+                    {c.year && <span className="ctf-year"> {c.year}</span>}
+                  </h3>
+                  <span className="ctf-org mono">{c.org}</span>
+                </div>
+                <div className="ctf-results">
+                  {c.results.map((r) => {
+                    const podium = !r.win && ['1st', '2nd', '3rd'].includes(r.place)
+                    return (
+                      <div className="ctf-result" key={r.round}>
+                        <span className="ctf-round mono">{r.round}</span>
+                        <span
+                          className={`ctf-rank${
+                            r.win ? ' ctf-rank--gold' : podium ? ' ctf-rank--podium' : ''
+                          }`}
+                        >
+                          {r.place}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+                <p className="ctf-note">{c.note}</p>
+              </article>
+            ))}
           </div>
+
+          <p className="ctf-team reveal">team · Bhadrinathan A · Prithivi</p>
         </div>
       </section>
 

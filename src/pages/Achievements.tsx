@@ -255,7 +255,7 @@ export function Achievements() {
             ))}
           </div>
 
-          <p className="ctf-team reveal">team · Bhadrinathan A · Prithivi</p>
+          <p className="ctf-team reveal">team · Bhadrinathan A · AnishKumar A · Prithiviraj B · Nagarajan S</p>
         </div>
       </section>
 

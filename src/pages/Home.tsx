@@ -4,53 +4,7 @@ import { Orbs } from '../components/Orbs'
 import { Ticker } from '../components/Ticker'
 import { CtaCard } from '../components/CtaCard'
 import { CLIENTS } from '../data/clients'
-import { IMG } from '../data/images'
-
-interface Service {
-  num: string
-  title: string
-  copy: string
-  tags: string[]
-  img: string
-}
-
-const SERVICES: Service[] = [
-  {
-    num: '001',
-    title: 'Web Design & Development',
-    copy: 'High-performance sites and full-stack apps — React, Node.js, MongoDB, MySQL — built for speed and longevity.',
-    tags: ['React', 'Node.js', 'UI/UX'],
-    img: IMG.webdev,
-  },
-  {
-    num: '002',
-    title: 'Cloud Services',
-    copy: 'Resilient cloud infrastructure and deployment so your business runs leaner, faster and always-on.',
-    tags: ['Infra', 'Scaling', 'Uptime'],
-    img: IMG.cloud,
-  },
-  {
-    num: '003',
-    title: 'Cybersecurity',
-    copy: 'Proactive hardening and CTF-grade expertise that keeps platforms and customer data protected.',
-    tags: ['Hardening', 'Audits', 'CTF'],
-    img: IMG.security,
-  },
-  {
-    num: '004',
-    title: 'DevOps & Automation',
-    copy: 'CI/CD with Docker and Jenkins — turning release chaos into a calm, repeatable process.',
-    tags: ['Docker', 'Jenkins', 'CI/CD'],
-    img: IMG.devops,
-  },
-  {
-    num: '005',
-    title: 'Virtual Lab Development',
-    copy: 'Interactive virtual laboratories for immersive, hands-on learning — our origin practice.',
-    tags: ['EdTech', 'Interactive'],
-    img: IMG.virtuallab,
-  },
-]
+import { SERVICES } from '../data/services'
 
 interface Principle {
   no: string

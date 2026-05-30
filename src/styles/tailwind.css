@@ -1,0 +1,6 @@
+/* Tailwind layers. Preflight is disabled in tailwind.config.js so this does not
+   reset the hand-written Spectrum design system in global.css — we only pull in
+   Tailwind's utility classes (used by the shader background + theme customizer). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

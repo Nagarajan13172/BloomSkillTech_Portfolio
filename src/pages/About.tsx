@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Orbs } from '../components/Orbs'
 import { CtaCard } from '../components/CtaCard'
+import { IMG } from '../data/images'
 
 const MISSION = [
   {
@@ -81,18 +82,21 @@ const TEAM = [
     name: 'Bhadrinathan',
     role: 'Tech Synthesizer',
     copy: 'Architects systems end-to-end and leads full-stack training — turning complex stacks into shippable products.',
+    img: IMG.teamA,
   },
   {
     initials: 'Pr',
     name: 'Prithiviraj',
     role: 'Automation Guru',
     copy: 'Lives in pipelines and scripts — automating the tedious so teams can focus on what actually moves the needle.',
+    img: IMG.teamB,
   },
   {
     initials: 'Na',
     name: 'Nagarajan',
     role: 'Frontend Virtuoso',
     copy: 'Obsesses over the pixels and the interactions — crafting interfaces that feel as good as they look.',
+    img: IMG.teamC,
   },
 ]
 
@@ -249,6 +253,9 @@ export function About() {
           <div className="team-grid">
             {TEAM.map((member, i) => (
               <article key={member.name} className={`team reveal${i ? ` d${i}` : ''}`}>
+                <div className="card-media">
+                  <img src={member.img} alt={`${member.name} — ${member.role}`} loading="lazy" />
+                </div>
                 <div className="monogram">{member.initials}</div>
                 <h3 className="h3">{member.name}</h3>
                 <p className="role">{member.role}</p>

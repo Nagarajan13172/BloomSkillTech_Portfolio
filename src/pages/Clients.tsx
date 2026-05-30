@@ -46,9 +46,14 @@ export function Clients() {
           <div className="spotlight-grid">
             {CLIENTS.map((c, i) => (
               <article key={c.name} className={`spot reveal${i % 2 ? ' d1' : ''}`}>
-                <span className="spot-mark">“</span>
+                <div className="card-media">
+                  <img src={c.image} alt={`${c.name} — ${c.service}`} loading="lazy" />
+                </div>
                 <span className="spot-service">{c.service}</span>
-                <p className="spot-quote">{c.quote}</p>
+                <p className="spot-quote">
+                  <span className="spot-mark">“</span>
+                  {c.quote}
+                </p>
                 <div className="spot-foot">
                   <span className="monogram">{c.initials}</span>
                   <div className="spot-id">

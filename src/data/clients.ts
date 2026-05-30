@@ -1,3 +1,11 @@
+import { IMG } from './images'
+
+/**
+ * Card images for Onfleek / Dofy / Vaikuntam are real screenshots of each
+ * client's own homepage (saved under public/clients). Voxiloud keeps a stock
+ * image — its site is a Play Store app listing we couldn't confidently identify
+ * ("Voxiloud" vs the similarly named "Voxloud"); swap in once the link is known.
+ */
 export interface Client {
   name: string
   domain: string
@@ -7,6 +15,8 @@ export interface Client {
   service: string
   quote: string
   by: string
+  /** Industry banner image for the spotlight card. */
+  image: string
 }
 
 /**
@@ -23,6 +33,7 @@ export const CLIENTS: Client[] = [
     quote:
       'Bloomskill Tech enhanced our platform’s performance and security with their full-stack expertise. Their dedication and customer-centric approach are pivotal to our success.',
     by: 'Onfleek Team',
+    image: '/clients/onfleek.jpg',
   },
   {
     name: 'Dofy',
@@ -33,6 +44,7 @@ export const CLIENTS: Client[] = [
     quote:
       'Their cloud services and cybersecurity solutions revolutionised our operations. The proactive support and professionalism are invaluable.',
     by: 'Dofy Management',
+    image: '/clients/dofy.jpg',
   },
   {
     name: 'Vaikuntam Realty',
@@ -43,6 +55,7 @@ export const CLIENTS: Client[] = [
     quote:
       'They modernised our digital infrastructure with a dynamic user experience. Their innovative solutions and exceptional service exceeded our expectations.',
     by: 'Vaikuntam Realty Group',
+    image: '/clients/vaikuntam.jpg',
   },
   {
     name: 'Voxiloud',
@@ -53,5 +66,6 @@ export const CLIENTS: Client[] = [
     quote:
       'Bloomskill Tech transformed our digital presence with innovative solutions and expertise. Their tailored approach and dedication are outstanding.',
     by: 'Voxiloud Team',
+    image: IMG.clVoxiloud,
   },
 ]

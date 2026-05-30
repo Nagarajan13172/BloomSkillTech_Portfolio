@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
+import ShaderBackground from '@/components/ui/shader-background'
 import { Orbs } from '../components/Orbs'
 import { Ticker } from '../components/Ticker'
 import { CtaCard } from '../components/CtaCard'
 import { CLIENTS } from '../data/clients'
+import { IMG } from '../data/images'
 
 interface Service {
   num: string
   title: string
   copy: string
   tags: string[]
+  img: string
 }
 
 const SERVICES: Service[] = [
@@ -17,30 +20,35 @@ const SERVICES: Service[] = [
     title: 'Web Design & Development',
     copy: 'High-performance sites and full-stack apps — React, Node.js, MongoDB, MySQL — built for speed and longevity.',
     tags: ['React', 'Node.js', 'UI/UX'],
+    img: IMG.webdev,
   },
   {
     num: '002',
     title: 'Cloud Services',
     copy: 'Resilient cloud infrastructure and deployment so your business runs leaner, faster and always-on.',
     tags: ['Infra', 'Scaling', 'Uptime'],
+    img: IMG.cloud,
   },
   {
     num: '003',
     title: 'Cybersecurity',
     copy: 'Proactive hardening and CTF-grade expertise that keeps platforms and customer data protected.',
     tags: ['Hardening', 'Audits', 'CTF'],
+    img: IMG.security,
   },
   {
     num: '004',
     title: 'DevOps & Automation',
     copy: 'CI/CD with Docker and Jenkins — turning release chaos into a calm, repeatable process.',
     tags: ['Docker', 'Jenkins', 'CI/CD'],
+    img: IMG.devops,
   },
   {
     num: '005',
     title: 'Virtual Lab Development',
     copy: 'Interactive virtual laboratories for immersive, hands-on learning — our origin practice.',
     tags: ['EdTech', 'Interactive'],
+    img: IMG.virtuallab,
   },
 ]
 
@@ -83,23 +91,25 @@ export function Home() {
         ]}
       />
 
-      {/* ===== HERO ===== */}
+      {/* ===== HERO (with 21st.dev WebGL shader background) ===== */}
       <header className="hero">
+        <ShaderBackground className="hero-shader" />
+        <div className="hero-scrim" />
         <div className="wrap hero-grid">
           <div>
-            <span className="eyebrow reveal">digital engineering studio</span>
+            <span className="eyebrow reveal">digital engineering studio · est. 2022</span>
             <h1 className="display reveal d1">
-              Unlocking potential through <span className="grad">innovative</span> solutions.
+              Engineering ideas into <span className="grad">scalable</span> products.
             </h1>
             <p className="lede reveal d2">
-              We blend deep technical expertise with creative prowess — engineering web, cloud,
-              security and automation that propel you forward.
+              Bloomskill Tech pairs engineering depth with creative craft — shipping web, cloud,
+              cybersecurity and DevOps that move your business forward.
             </p>
             <div className="row cta-row reveal d3">
               <Link className="btn" to="/contact">
                 Start a project ↗
               </Link>
-              <Link className="btn btn--ghost" to="/about">
+              <Link className="btn btn--outline-light" to="/about">
                 Our story
               </Link>
             </div>
@@ -125,7 +135,7 @@ export function Home() {
             </div>
           </div>
 
-          <div className="lens-stage reveal d2">
+          <div className="hero-figure reveal d2">
             <div className="float-chip chip1">
               <span className="d" style={{ background: 'var(--blue)' }} />
               web · cloud
@@ -134,13 +144,12 @@ export function Home() {
               <span className="d" style={{ background: 'var(--magenta)' }} />
               security · devops
             </div>
-            <div className="lens-card">
-              <div className="lens">
-                <span className="blob blue" />
-                <span className="blob pink" />
-              </div>
-              <img className="lens-logo" src="/bst-logo.png" alt="Bloomskill Tech logo" />
-              <div className="lens-tag">// two halves · one spectrum</div>
+            <div className="hero-figure-card">
+              <img
+                src="/hero-bst.jpg"
+                alt="The Bloomskill Tech team engineering digital products"
+              />
+              <span className="hero-figure-tag mono">// digital engineering studio · est. 2022</span>
             </div>
           </div>
         </div>
@@ -158,6 +167,9 @@ export function Home() {
           <div className="svc-grid">
             {SERVICES.map((s, i) => (
               <article key={s.num} className={`svc reveal${i % 3 === 1 ? ' d1' : i % 3 === 2 ? ' d2' : ''}`}>
+                <div className="card-media">
+                  <img src={s.img} alt={s.title} loading="lazy" />
+                </div>
                 <span className="num">{s.num}</span>
                 <h3 className="h3">{s.title}</h3>
                 <p>{s.copy}</p>
@@ -215,6 +227,9 @@ export function Home() {
           <div className="clients-grid">
             {CLIENTS.slice(0, 2).map((c, i) => (
               <figure key={c.name} className={`quote reveal${i % 2 ? ' d1' : ''}`}>
+                <div className="card-media">
+                  <img src={c.image} alt={`${c.name} — ${c.service}`} loading="lazy" />
+                </div>
                 <div className="row" style={{ gap: 14 }}>
                   <span className="monogram">{c.initials}</span>
                   <div>

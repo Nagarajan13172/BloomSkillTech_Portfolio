@@ -1,5 +1,6 @@
 import { Orbs } from '../components/Orbs'
 import { CtaCard } from '../components/CtaCard'
+import { IMG } from '../data/images'
 
 const STATS = [
   { value: '6+', label: 'workshops led' },
@@ -14,6 +15,7 @@ interface Workshop {
   title: string
   copy: string
   lead: string
+  img: string
 }
 
 const WORKSHOPS: Workshop[] = [
@@ -23,6 +25,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'Mastering Modern Development & Automation',
     copy: 'An engaging opening keynote on DevOps and emerging technologies — deep expertise and enthusiasm that resonated with the audience.',
     lead: 'Anish Kumar',
+    img: IMG.wsDevopsKeynote,
   },
   {
     tag: 'Full Stack',
@@ -30,6 +33,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'Mastering Full Stack Web Development',
     copy: 'A dynamic 4-day workshop with the Department of Electronics & Communication Engineering — from fundamentals to shipping real apps.',
     lead: 'Anish Kumar',
+    img: IMG.wsFullstack,
   },
   {
     tag: 'DevOps',
@@ -37,6 +41,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'DevOps with Docker & Jenkins',
     copy: 'An immersive session covering key DevOps concepts and practical applications — CI/CD, containers and automation in the real world.',
     lead: 'Anish Kumar',
+    img: IMG.wsDevops,
   },
   {
     tag: 'Networking',
@@ -44,6 +49,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'CCNA — Cisco Certified Network Associate',
     copy: 'A comprehensive workshop on networking fundamentals and practical skills — tools like Wireshark and the foundations for the CCNA exam.',
     lead: 'Anish Kumar',
+    img: IMG.wsNetworking,
   },
   {
     tag: 'Programming',
@@ -51,6 +57,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'C & Python Programming Mastery',
     copy: 'Essential programming concepts and hands-on coding — building a strong foundation in both C and Python from the ground up.',
     lead: 'Bhadrinathan',
+    img: IMG.wsProgramming,
   },
   {
     tag: 'Full Stack',
@@ -58,6 +65,7 @@ const WORKSHOPS: Workshop[] = [
     title: 'Full Stack Development Mastery',
     copy: 'A journey through HTML, CSS, Node.js, React, MongoDB, GitHub and MySQL — the complete toolkit for modern full-stack engineering.',
     lead: 'Bhadrinathan',
+    img: IMG.wsFullstack2,
   },
 ]
 
@@ -135,6 +143,9 @@ export function Achievements() {
           <div className="work-grid">
             {WORKSHOPS.map((w, i) => (
               <article key={w.title} className={`work reveal${i % 3 === 1 ? ' d1' : i % 3 === 2 ? ' d2' : ''}`}>
+                <div className="card-media">
+                  <img src={w.img} alt={`${w.title} — ${w.college}`} loading="lazy" />
+                </div>
                 <div className="work-top">
                   <span className="tag--pill">{w.tag}</span>
                   <span className="mono muted" style={{ fontSize: '.72rem' }}>

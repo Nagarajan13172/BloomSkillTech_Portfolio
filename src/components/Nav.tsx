@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Moon, Sun } from 'lucide-react'
 import { NAV_ITEMS } from './nav-data'
 import { useScrolled } from '../hooks/useScrolled'
+import { useTheme } from '../theme/ThemeProvider'
 
 export function Nav() {
   const [open, setOpen] = useState(false)
   const scrolled = useScrolled()
   const location = useLocation()
+  const { mode, toggleMode } = useTheme()
 
   // Contact page swaps the nav CTA to point at the form anchor.
   const onContact = location.pathname === '/contact'
@@ -36,6 +39,13 @@ export function Nav() {
         </div>
 
         <div className="nav-right">
+          <button
+            className="mode-toggle"
+            aria-label={mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            onClick={toggleMode}
+          >
+            {mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+          </button>
           <Link className="btn" to={onContact ? '#start' : '/contact'}>
             {onContact ? 'Start a project' : 'Get in touch'} ↗
           </Link>

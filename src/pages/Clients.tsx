@@ -2,7 +2,24 @@ import { Orbs } from '../components/Orbs'
 import { CtaCard } from '../components/CtaCard'
 import { CLIENTS } from '../data/clients'
 
+const STATS = [
+  { value: '4', label: 'clients shipped' },
+  { value: '5.0', label: 'avg rating' },
+  { value: '4', label: 'industries' },
+  { value: '100%', label: 'delivered' },
+]
+
+function Stars() {
+  return (
+    <span className="tstars" aria-label="Rated 5 out of 5">
+      <span aria-hidden="true">★★★★★</span>
+    </span>
+  )
+}
+
 export function Clients() {
+  const [featured, ...rest] = CLIENTS
+
   return (
     <>
       <Orbs
@@ -17,14 +34,23 @@ export function Clients() {
         <div className="wrap">
           <span className="eyebrow reveal">client spotlight</span>
           <h1 className="display reveal d1" style={{ maxWidth: '16ch' }}>
-            What our clients <span className="grad">say</span>.
+            Loved by the teams we <span className="grad">build for</span>.
           </h1>
           <p className="lede reveal d2" style={{ maxWidth: 640 }}>
             We measure our work by the teams it moves forward. Here’s what partners across
             e-commerce, real estate and product say about building with Bloomskill Tech.
           </p>
 
-          <div className="logos-row reveal d3">
+          <div className="hstats reveal d3">
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="logos-row reveal d4">
             {CLIENTS.map((c) => (
               <a
                 key={c.name}
@@ -40,35 +66,71 @@ export function Clients() {
         </div>
       </section>
 
-      {/* ===== SPOTLIGHTS ===== */}
+      {/* ===== TESTIMONIALS ===== */}
       <section className="sec sec--tight">
         <div className="wrap">
-          <div className="spotlight-grid">
-            {CLIENTS.map((c, i) => (
-              <article key={c.name} className={`spot reveal${i % 2 ? ' d1' : ''}`}>
-                <div className="card-media">
-                  <img src={c.image} alt={`${c.name} — ${c.service}`} loading="lazy" />
+          {/* featured */}
+          <article className="tfeatured reveal">
+            <div className="tfeatured-body">
+              <span className="badge-num">featured client</span>
+              <Stars />
+              <blockquote className="tquote tquote--lg">
+                <span className="tquote-mark">“</span>
+                {featured.quote}
+              </blockquote>
+              <div className="tfoot">
+                <span className="monogram">{featured.initials}</span>
+                <div className="tfoot-id">
+                  <strong>{featured.name}</strong>
+                  <span className="tservice mono">{featured.service}</span>
                 </div>
-                <span className="spot-service">{c.service}</span>
-                <p className="spot-quote">
-                  <span className="spot-mark">“</span>
+                <a
+                  className="tvisit mono"
+                  href={featured.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {featured.domain} ↗
+                </a>
+              </div>
+            </div>
+            <a
+              className="tfeatured-shot"
+              href={featured.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${featured.name}`}
+            >
+              <span className="tshot-glow" aria-hidden="true" />
+              <img src={featured.image} alt={`${featured.name} homepage`} loading="lazy" />
+            </a>
+          </article>
+
+          {/* grid */}
+          <div className="tgrid">
+            {rest.map((c, i) => (
+              <article key={c.name} className={`tcard reveal${i ? ` d${i}` : ''}`}>
+                <a
+                  className="tcard-shot"
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${c.name}`}
+                >
+                  <img src={c.image} alt={`${c.name} homepage`} loading="lazy" />
+                  <span className="tcard-domain mono">{c.domain} ↗</span>
+                </a>
+                <Stars />
+                <blockquote className="tquote">
+                  <span className="tquote-mark">“</span>
                   {c.quote}
-                </p>
-                <div className="spot-foot">
+                </blockquote>
+                <div className="tfoot">
                   <span className="monogram">{c.initials}</span>
-                  <div className="spot-id">
+                  <div className="tfoot-id">
                     <strong>{c.name}</strong>
-                    <span className="by">— {c.by}</span>
+                    <span className="tservice mono">{c.service}</span>
                   </div>
-                  <a
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mono"
-                    style={{ marginLeft: 'auto', fontSize: '.72rem', color: 'var(--magenta)' }}
-                  >
-                    {c.domain} ↗
-                  </a>
                 </div>
               </article>
             ))}

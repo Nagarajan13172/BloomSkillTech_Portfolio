@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # vite
 *.tsbuildinfo
+
+# secrets (never commit credentials)
+.env
+.env.*
+.env.example

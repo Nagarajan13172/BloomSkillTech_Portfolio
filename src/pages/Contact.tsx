@@ -11,19 +11,51 @@ const SERVICES = [
   'Something else',
 ]
 
-function BriefForm() {
-  const [ok, setOk] = useState('')
+type Status = 'idle' | 'sending' | 'ok' | 'error'
 
-  // Front-end only — mirrors the prototype's friendly confirmation (no backend).
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+function BriefForm() {
+  const [status, setStatus] = useState<Status>('idle')
+  const [feedback, setFeedback] = useState('')
+
+  // Posts the brief to the Nodemailer-backed /api/contact endpoint.
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
     const data = new FormData(form)
-    const fullName = (data.get('name') as string) || 'there'
-    const first = fullName.split(' ')[0]
-    setOk(`> message queued. thanks, ${first} — we’ll reply within 24h.`)
-    form.reset()
+    const payload = {
+      name: ((data.get('name') as string) || '').trim(),
+      email: ((data.get('email') as string) || '').trim(),
+      service: (data.get('service') as string) || '',
+      message: ((data.get('message') as string) || '').trim(),
+    }
+
+    setStatus('sending')
+    setFeedback('> sending project_brief…')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await res.json().catch(() => ({}))
+
+      if (res.ok && result.ok) {
+        const first = payload.name.split(' ')[0] || 'there'
+        setStatus('ok')
+        setFeedback(`> message sent. thanks, ${first} — we’ll reply within 24h.`)
+        form.reset()
+      } else {
+        setStatus('error')
+        setFeedback(`> ${result.error || 'Something went wrong. Please try again.'}`)
+      }
+    } catch {
+      setStatus('error')
+      setFeedback('> network error — please email hello@bloomskilltech.in directly.')
+    }
   }
+
+  const sending = status === 'sending'
 
   return (
     <div className="brief reveal d1">
@@ -61,10 +93,21 @@ function BriefForm() {
             placeholder="Tell us about the problem you're solving..."
           />
         </label>
-        <button className="btn" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
-          Send brief ↗
+        <button
+          className="btn"
+          type="submit"
+          disabled={sending}
+          style={{ width: '100%', justifyContent: 'center', opacity: sending ? 0.7 : 1 }}
+        >
+          {sending ? 'Sending…' : 'Send brief ↗'}
         </button>
-        <p className={`form-ok${ok ? ' show' : ''}`}>{ok}</p>
+        <p
+          className={`form-ok${feedback ? ' show' : ''}${status === 'error' ? ' form-ok--err' : ''}`}
+          role="status"
+          aria-live="polite"
+        >
+          {feedback}
+        </p>
       </form>
     </div>
   )

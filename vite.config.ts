@@ -13,4 +13,10 @@ export default defineConfig({
       '@': path.resolve(dirname, './src'),
     },
   },
+  server: {
+    // forward API calls to the Express + Nodemailer server during dev
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
+  },
 })

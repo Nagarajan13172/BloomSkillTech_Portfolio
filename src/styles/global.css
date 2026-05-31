@@ -3461,3 +3461,28 @@ a.spot-id:hover .dom {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   HERO ORBIT STAGE  (21st.dev RadialOrbitalTimeline in the hero)
+   ============================================================ */
+.hero-orbit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 400px;
+  margin-inline: auto;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #140e33, #06051a 72%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 90px -40px rgba(89, 73, 166, 0.55),
+    inset 0 0 60px rgba(89, 73, 166, 0.15);
+}
+/* respect reduced-motion: stop the orbital's CSS pulses/pings (JS auto-rotate
+   is also disabled in the component when reduced-motion is preferred) */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orbit .animate-ping,
+  .hero-orbit .animate-pulse {
+    animation: none !important;
+  }
+}

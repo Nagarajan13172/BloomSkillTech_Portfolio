@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import ShaderBackground from '@/components/ui/shader-background'
+import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline'
+import { Rocket, FlaskConical, Cloud, Trophy, Boxes } from 'lucide-react'
 import { Orbs } from '../components/Orbs'
 import { Ticker } from '../components/Ticker'
 import { CtaCard } from '../components/CtaCard'
@@ -32,6 +34,64 @@ const PRINCIPLES: Principle[] = [
     no: '/04',
     title: 'Knowledge Sharing & Collaboration',
     copy: 'From college workshops to open collaboration, we grow the ecosystem we’re part of.',
+  },
+]
+
+const JOURNEY = [
+  {
+    id: 1,
+    title: 'Founded',
+    date: '2022',
+    content: 'Bloomskill Tech is born — a digital engineering studio built to unlock potential through innovative solutions.',
+    category: 'Origin',
+    icon: Rocket,
+    relatedIds: [2],
+    status: 'completed' as const,
+    energy: 100,
+  },
+  {
+    id: 2,
+    title: 'Virtual Labs',
+    date: '2023',
+    content: 'Launched interactive virtual laboratories for immersive, hands-on learning — our origin practice.',
+    category: 'EdTech',
+    icon: FlaskConical,
+    relatedIds: [1, 3],
+    status: 'completed' as const,
+    energy: 88,
+  },
+  {
+    id: 3,
+    title: 'Web & Cloud',
+    date: '2024',
+    content: 'Expanded into full-stack web development and resilient cloud services for real businesses.',
+    category: 'Engineering',
+    icon: Cloud,
+    relatedIds: [2, 4],
+    status: 'completed' as const,
+    energy: 82,
+  },
+  {
+    id: 4,
+    title: 'CTF Champions',
+    date: '2025',
+    content: '1st in Yukthi CTF prelims and 1st at Tom-CTF grand finals — proven in the security arena.',
+    category: 'Security',
+    icon: Trophy,
+    relatedIds: [3, 5],
+    status: 'completed' as const,
+    energy: 96,
+  },
+  {
+    id: 5,
+    title: 'Products',
+    date: '2025',
+    content: 'Shipped our own products — Trinity Network (VPN) and zerocode, a Rust code-execution sandbox.',
+    category: 'Products',
+    icon: Boxes,
+    relatedIds: [4],
+    status: 'in-progress' as const,
+    energy: 72,
   },
 ]
 
@@ -89,22 +149,8 @@ export function Home() {
             </div>
           </div>
 
-          <div className="hero-figure reveal d2">
-            <div className="float-chip chip1">
-              <span className="d" style={{ background: 'var(--blue)' }} />
-              web · cloud
-            </div>
-            <div className="float-chip chip2">
-              <span className="d" style={{ background: 'var(--magenta)' }} />
-              security · devops
-            </div>
-            <div className="hero-figure-card">
-              <img
-                src="/hero-studio.jpg"
-                alt="Bloomskill Tech engineers building digital products"
-              />
-              <span className="hero-figure-tag mono">// digital engineering studio · est. 2022</span>
-            </div>
+          <div className="hero-orbit reveal d2">
+            <RadialOrbitalTimeline timelineData={JOURNEY} />
           </div>
         </div>
       </header>

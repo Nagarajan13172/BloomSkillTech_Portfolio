@@ -5,9 +5,9 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Products', to: '/products' },
-  { label: 'About', to: '/about' },
   { label: 'Achievements', to: '/achievements' },
   { label: 'Clients', to: '/clients' },
   { label: 'Contact', to: '/contact' },

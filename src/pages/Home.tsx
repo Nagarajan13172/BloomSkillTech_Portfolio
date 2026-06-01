@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import ShaderBackground from '@/components/ui/shader-background'
 import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline'
 import { Rocket, FlaskConical, Cloud, Trophy, Boxes } from 'lucide-react'
-import { Orbs } from '../components/Orbs'
 import { Ticker } from '../components/Ticker'
 import { CtaCard } from '../components/CtaCard'
 import { CLIENTS } from '../data/clients'
@@ -98,12 +97,9 @@ const JOURNEY = [
 export function Home() {
   return (
     <>
-      <Orbs
-        orbs={[
-          { style: { width: 520, height: 520, top: -140, left: -120, background: '#90c0f1' } },
-          { style: { width: 460, height: 460, top: 180, right: -140, background: '#f897bf' } },
-        ]}
-      />
+      {/* No page-level <Orbs> here: the hero's opaque dark background hides them
+          everywhere except where the blue orb bled up behind the transparent
+          nav — that stray blue fade was the only thing they produced. */}
 
       {/* ===== HERO (with 21st.dev WebGL shader background) ===== */}
       <header className="hero">

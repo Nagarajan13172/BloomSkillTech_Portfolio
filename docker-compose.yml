@@ -1,28 +1,29 @@
-# Production stack: the Node app behind Caddy (automatic HTTPS via Let's Encrypt).
-#
-# Prereqs on the VPS:
-#   1. DNS A/AAAA records for your domain point at this server's IP.
-#   2. Ports 80 and 443 are open to the internet (Caddy needs both for ACME).
-#   3. A production `.env` sits next to this file (SMTP_USER, SMTP_PASS, MAIL_TO).
-#
-# Bring it up:   docker compose up -d --build
-# View logs:     docker compose logs -f
-# Update:        git pull && docker compose up -d --build
-
 services:
   web:
     build: .
     restart: unless-stopped
+    container_name: bloomskilltech
+    hostname: bloomskilltech
     env_file: .env          # SMTP_USER / SMTP_PASS / MAIL_TO live here (not committed)
     environment:
       NODE_ENV: production
-      TRUST_PROXY_HOPS: "1"   # reverse proxies in front (Traefik = 1) → real client IP in logs
-      # LOG_FORMAT: combined  # optional: force a morgan preset; unset = neat custom format
-    expose:
-      - "3001"              # internal only — reached via the caddy service, not published
+      TRUST_PROXY_HOPS: "1"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bloomskilltech.rule=Host(`bloomskilltech.in`)"
+      - "traefik.http.routers.bloomskilltech.entrypoints=websecure"
+      - "traefik.http.routers.bloomskilltech.tls=true"
+      - "traefik.http.routers.bloomskilltech.tls.certresolver=myresolver"
+      - "traefik.http.services.bloomskilltech.loadbalancer.server.port=3001"
+    networks:
+      - default         # internal only — reached via the caddy service, not published
+           # internal only — reached via the caddy service, not published
     logging:                # rotate captured stdout/stderr so it can't fill the disk
       driver: json-file
       options:
         max-size: "10m"     # rotate at 10 MB per file
-        max-file: "5"       # keep 5 rotated files (≈50 MB max)
-
+        max-file: "5" 
+networks:
+  default:
+    name: traefik
+    external: true         # keep 5 rotated files (≈50 MB max)

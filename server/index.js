@@ -4,8 +4,7 @@ import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import nodemailer from 'nodemailer'
-import pinoHttp from 'pino-http'
-import { logger } from './logger.js'
+import morgan from 'morgan'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -19,7 +18,9 @@ const {
 } = process.env
 
 if (!SMTP_USER || !SMTP_PASS) {
-  logger.fatal('Missing SMTP_USER / SMTP_PASS. Copy .env.example to .env and fill them in.')
+  console.error(
+    '\n[mailer] Missing SMTP_USER / SMTP_PASS. Copy .env.example to .env and fill them in.\n',
+  )
   process.exit(1)
 }
 
@@ -32,29 +33,18 @@ const transporter = nodemailer.createTransport({
 // Confirm the credentials authenticate at boot (does NOT send mail).
 transporter
   .verify()
-  .then(() => logger.info('[mailer] SMTP connection verified — ready to send.'))
-  .catch((err) => logger.error({ err }, '[mailer] SMTP verify failed'))
+  .then(() => console.log('[mailer] SMTP connection verified — ready to send.'))
+  .catch((err) => console.error('[mailer] SMTP verify failed:', err.message))
 
 const app = express()
 
-// HTTP request logging. Each request gets an id; static-asset chatter and the
-// container healthcheck are filtered out so the log reads as page views + API.
+// HTTP access logging (morgan). Apache "combined" format in production, the
+// concise coloured "dev" format locally — override with LOG_FORMAT. The 30s
+// container healthcheck is skipped so it doesn't flood the access log.
+const logFormat = process.env.LOG_FORMAT || (NODE_ENV === 'production' ? 'combined' : 'dev')
 app.use(
-  pinoHttp({
-    logger,
-    autoLogging: {
-      ignore: (req) => {
-        const url = (req.url || '').split('?')[0]
-        if (url === '/api/health') return true
-        return /\.(js|css|map|png|jpe?g|svg|ico|webp|woff2?|ttf)$/.test(url)
-      },
-    },
-    // 5xx → error, 4xx → warn, everything else → info
-    customLogLevel: (_req, res, err) => {
-      if (err || res.statusCode >= 500) return 'error'
-      if (res.statusCode >= 400) return 'warn'
-      return 'info'
-    },
+  morgan(logFormat, {
+    skip: (req) => (req.url || '').split('?')[0] === '/api/health',
   }),
 )
 
@@ -110,10 +100,10 @@ app.post('/api/contact', async (req, res) => {
           </div>
         </div>`,
     })
-    req.log.info({ email, service, messageLength: message.length }, 'contact: email sent')
+    console.log(`[contact] email sent — from ${email} (service: ${service})`)
     return res.json({ ok: true })
   } catch (err) {
-    req.log.error({ err, email }, '[mailer] send failed')
+    console.error('[mailer] send failed:', err.message)
     return res.status(502).json({ ok: false, error: 'Could not send your message right now. Please email us directly.' })
   }
 })
@@ -129,4 +119,4 @@ if (NODE_ENV === 'production' || fs.existsSync(distDir)) {
   app.get(/^\/(?!api\/).*/, (_req, res) => res.sendFile(path.join(distDir, 'index.html')))
 }
 
-app.listen(PORT, () => logger.info({ port: Number(PORT) }, `[api] listening on http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`[api] listening on http://localhost:${PORT}`))

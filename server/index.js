@@ -4,6 +4,8 @@ import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import nodemailer from 'nodemailer'
+import pinoHttp from 'pino-http'
+import { logger } from './logger.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -17,9 +19,7 @@ const {
 } = process.env
 
 if (!SMTP_USER || !SMTP_PASS) {
-  console.error(
-    '\n[mailer] Missing SMTP_USER / SMTP_PASS. Copy .env.example to .env and fill them in.\n',
-  )
+  logger.fatal('Missing SMTP_USER / SMTP_PASS. Copy .env.example to .env and fill them in.')
   process.exit(1)
 }
 
@@ -32,10 +32,32 @@ const transporter = nodemailer.createTransport({
 // Confirm the credentials authenticate at boot (does NOT send mail).
 transporter
   .verify()
-  .then(() => console.log('[mailer] SMTP connection verified — ready to send.'))
-  .catch((err) => console.error('[mailer] SMTP verify failed:', err.message))
+  .then(() => logger.info('[mailer] SMTP connection verified — ready to send.'))
+  .catch((err) => logger.error({ err }, '[mailer] SMTP verify failed'))
 
 const app = express()
+
+// HTTP request logging. Each request gets an id; static-asset chatter and the
+// container healthcheck are filtered out so the log reads as page views + API.
+app.use(
+  pinoHttp({
+    logger,
+    autoLogging: {
+      ignore: (req) => {
+        const url = (req.url || '').split('?')[0]
+        if (url === '/api/health') return true
+        return /\.(js|css|map|png|jpe?g|svg|ico|webp|woff2?|ttf)$/.test(url)
+      },
+    },
+    // 5xx → error, 4xx → warn, everything else → info
+    customLogLevel: (_req, res, err) => {
+      if (err || res.statusCode >= 500) return 'error'
+      if (res.statusCode >= 400) return 'warn'
+      return 'info'
+    },
+  }),
+)
+
 app.use(express.json({ limit: '32kb' }))
 
 const isEmail = (v) => typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
@@ -88,9 +110,10 @@ app.post('/api/contact', async (req, res) => {
           </div>
         </div>`,
     })
+    req.log.info({ email, service, messageLength: message.length }, 'contact: email sent')
     return res.json({ ok: true })
   } catch (err) {
-    console.error('[mailer] send failed:', err.message)
+    req.log.error({ err, email }, '[mailer] send failed')
     return res.status(502).json({ ok: false, error: 'Could not send your message right now. Please email us directly.' })
   }
 })
@@ -106,4 +129,4 @@ if (NODE_ENV === 'production' || fs.existsSync(distDir)) {
   app.get(/^\/(?!api\/).*/, (_req, res) => res.sendFile(path.join(distDir, 'index.html')))
 }
 
-app.listen(PORT, () => console.log(`[api] listening on http://localhost:${PORT}`))
+app.listen(PORT, () => logger.info({ port: Number(PORT) }, `[api] listening on http://localhost:${PORT}`))

@@ -16,6 +16,12 @@ services:
     env_file: .env          # SMTP_USER / SMTP_PASS / MAIL_TO live here (not committed)
     environment:
       NODE_ENV: production
+      LOG_LEVEL: info       # debug | info | warn | error
     expose:
       - "3001"              # internal only — reached via the caddy service, not published
+    logging:                # rotate captured stdout/stderr so it can't fill the disk
+      driver: json-file
+      options:
+        max-size: "10m"     # rotate at 10 MB per file
+        max-file: "5"       # keep 5 rotated files (≈50 MB max)
 

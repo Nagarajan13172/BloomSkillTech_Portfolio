@@ -38,12 +38,41 @@ transporter
 
 const app = express()
 
-// HTTP access logging (morgan). Apache "combined" format in production, the
-// concise coloured "dev" format locally — override with LOG_FORMAT. The 30s
-// container healthcheck is skipped so it doesn't flood the access log.
-const logFormat = process.env.LOG_FORMAT || (NODE_ENV === 'production' ? 'combined' : 'dev')
+// Behind Traefik the socket peer is the proxy, not the visitor. Trusting the
+// proxy lets Express read the real client IP from the X-Forwarded-For header
+// Traefik sets, exposing it as req.ip. One hop = just Traefik; bump
+// TRUST_PROXY_HOPS if you add another proxy in front (Cloudflare → Traefik = 2).
+app.set('trust proxy', Number(process.env.TRUST_PROXY_HOPS) || 1)
+
+// HTTP access logging (morgan), in a compact aligned line that leads with the
+// visitor's public IP:
+//   2026-06-04T10:00:00.000Z  203.0.113.5      POST  201    12 ms     46b  /api/contact
+// Colours the status in dev (TTY) only — production logs stay plain text.
+// Set LOG_FORMAT to fall back to a morgan preset (combined | common | dev | tiny).
+const isProd = NODE_ENV === 'production'
+const paint = (code, s) => (isProd ? s : `\x1b[${code}m${s}\x1b[0m`)
+const statusColour = (s) => (s >= 500 ? 31 : s >= 400 ? 33 : s >= 300 ? 36 : 32)
+
+// The real public IP of the visitor (req.ip, resolved from X-Forwarded-For).
+morgan.token('client-ip', (req) => req.ip || req.socket?.remoteAddress || '-')
+
+const neatLog = (tokens, req, res) => {
+  const status = Number(tokens.status(req, res)) || 0
+  const ms = tokens['response-time'](req, res)
+  const len = tokens.res(req, res, 'content-length') || '0'
+  return [
+    tokens.date(req, res, 'iso'),
+    tokens['client-ip'](req, res).padEnd(15),
+    tokens.method(req, res).padEnd(4),
+    paint(statusColour(status), String(status)),
+    `${ms ? `${ms} ms` : '-'}`.padStart(8),
+    `${len}b`.padStart(7),
+    tokens.url(req, res),
+  ].join('  ')
+}
+
 app.use(
-  morgan(logFormat, {
+  morgan(process.env.LOG_FORMAT || neatLog, {
     skip: (req) => (req.url || '').split('?')[0] === '/api/health',
   }),
 )

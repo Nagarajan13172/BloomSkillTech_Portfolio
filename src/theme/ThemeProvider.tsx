@@ -24,7 +24,18 @@ function readInitial(): ThemeState {
   if (typeof window === 'undefined') return DEFAULT_THEME
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
-    if (raw) return { ...DEFAULT_THEME, ...(JSON.parse(raw) as Partial<ThemeState>) }
+    if (raw) {
+      const stored = JSON.parse(raw) as Partial<ThemeState>
+      // Palette and font are fixed to the brand (logo spectrum + Space Grotesk)
+      // and no longer user-selectable, so ignore any persisted values for them
+      // — otherwise an old stored palette could stick the theme off-brand.
+      return {
+        ...DEFAULT_THEME,
+        ...stored,
+        palette: DEFAULT_THEME.palette,
+        font: DEFAULT_THEME.font,
+      }
+    }
   } catch {
     /* ignore malformed storage */
   }

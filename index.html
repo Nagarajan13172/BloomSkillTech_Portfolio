@@ -20,13 +20,13 @@
         var t = JSON.parse(localStorage.getItem('bst-theme') || '{}')
         var e = document.documentElement
         e.dataset.mode = t.mode || 'light'
-        e.dataset.palette = t.palette || 'verdant'
-        e.dataset.font = t.font || 'grotesk'
+        e.dataset.palette = 'spectrum'
+        e.dataset.font = 'grotesk'
         e.dataset.radius = t.radius || 'soft'
       } catch (_) {
         var d = document.documentElement
         d.dataset.mode = 'light'
-        d.dataset.palette = 'verdant'
+        d.dataset.palette = 'spectrum'
         d.dataset.font = 'grotesk'
         d.dataset.radius = 'soft'
       }

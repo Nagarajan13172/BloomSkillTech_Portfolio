@@ -4,7 +4,7 @@ import { FinalCta } from '../components/FinalCta'
 /**
  * Services — the 4D framework expanded (brand-and-content.md + pages-spec.md).
  * One service story, not five: cloud/security/DevOps fold in as capabilities
- * under Develop/Deliver. Anchors (#strategy …) are shareable.
+ * under Develop/Deliver. Anchors (#define …) are shareable.
  */
 
 interface Stage {
@@ -20,9 +20,9 @@ interface Stage {
 
 const STAGES: Stage[] = [
   {
-    id: 'strategy',
+    id: 'define',
     no: '01',
-    title: 'Strategy',
+    title: 'Define',
     who: 'A strategist and you',
     duration: '1–2 weeks',
     intro:
@@ -94,7 +94,7 @@ const ENGAGE: Engagement[] = [
   {
     duration: '2–3 weeks',
     title: 'Product Sprint',
-    copy: 'Strategy plus a clickable prototype. For validating an idea before you commit build budget.',
+    copy: 'The Define stage plus a clickable prototype. For validating an idea before you commit build budget.',
   },
   {
     duration: '8–12 weeks',
@@ -119,7 +119,7 @@ export function Services() {
             One team, four disciplines, <span className="grad">one timeline</span>.
           </h1>
           <p className="lede reveal d2">
-            Strategy, Design, Development and Delivery under one roof — the same people, the same
+            Define, Design, Develop and Deliver under one roof — the same people, the same
             standups, accountable to one contract. Here is what each stage includes.
           </p>
           <div className="row cta-row reveal d3">

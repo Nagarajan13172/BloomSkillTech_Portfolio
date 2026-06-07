@@ -14,9 +14,9 @@ Update this file at the end of every session.
 ## Key decisions
 - **Approach:** Adapt the existing **React + Vite** app in place (NOT the Astro rebuild in the build plan). The user chose this knowingly.
   - **Consequence / open SEO debt:** pages stay client-side-rendered, so the skill's `curl`-HTML rule and Lighthouse/SEO gates are NOT met yet. Add prerendering later (e.g. `vite-react-ssg`) to satisfy SKILL.md rule #1. Flagged per page below.
-- **Accent color:** deep green `#0E6B4F` (verdant palette).
-- **Display font:** Space Grotesk (already loaded). Body: Inter.
-- **Theme:** site default flipped to **light + verdant**; dark mode still available via the existing toggle.
+- **Accent:** the **logo "spectrum" gradient** — blue `#4f7acf` → indigo `#5949a6` → magenta `#b24d9b` → pink `#f897bf`. **No green** (the earlier green/verdant accent was fully removed; verdant palette deleted from config + CSS). Orbital center orb uses the logo's lens gradient; orbital nodes/hover use indigo/magenta.
+- **Display font:** Space Grotesk (Body: Inter).
+- **Theme:** site default **light + spectrum**; dark mode still available. **Palette and font are fixed to the brand and no longer user-selectable** — the ThemeCustomizer's palette + font pickers were removed, and stored palette/font in localStorage are ignored (forced to spectrum/grotesk) so an old theme can't stick the site off-brand. Customizer now only offers Appearance (light/dark) + Corners.
 
 ## Status by area
 | Area | State | Notes |

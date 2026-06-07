@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url'
 import express from 'express'
 import nodemailer from 'nodemailer'
 import morgan from 'morgan'
+import { GoogleGenAI } from '@google/genai'
+import { SYSTEM_PROMPT } from './companyKnowledge.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -15,6 +17,11 @@ const {
   MAIL_TO,
   PORT = 3001,
   NODE_ENV,
+  // Google Gemini powers the "Ask AI" assistant (free tier works fine).
+  GEMINI_API_KEY,
+  // Override the chat model if you like. gemini-2.5-flash is fast, smart and
+  // free-tier friendly; gemini-2.5-flash-lite is even lighter.
+  GEMINI_MODEL = 'gemini-2.5-flash',
 } = process.env
 
 if (!SMTP_USER || !SMTP_PASS) {
@@ -35,6 +42,13 @@ transporter
   .verify()
   .then(() => console.log('[mailer] SMTP connection verified — ready to send.'))
   .catch((err) => console.error('[mailer] SMTP verify failed:', err.message))
+
+// "Ask AI" chat assistant. The Gemini key is optional — without it the rest of
+// the site (and the contact form) keeps working and the /api/chat endpoint
+// returns a friendly 503.
+const genai = GEMINI_API_KEY ? new GoogleGenAI({ apiKey: GEMINI_API_KEY }) : null
+if (genai) console.log(`[chat] Ask AI ready — Gemini model ${GEMINI_MODEL}.`)
+else console.warn('[chat] GEMINI_API_KEY not set — the Ask AI assistant is disabled.')
 
 const app = express()
 
@@ -134,6 +148,98 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('[mailer] send failed:', err.message)
     return res.status(502).json({ ok: false, error: 'Could not send your message right now. Please email us directly.' })
+  }
+})
+
+// "Ask AI" — answers visitor questions about BloomSkill Tech using Gemini,
+// grounded in the company knowledge in companyKnowledge.js. The browser sends
+// the running conversation as `messages`; the API key never leaves the server.
+const MAX_TURNS = 16 // keep the last N messages to bound cost / context
+const MAX_CHARS = 4000 // per-message guard
+
+app.post('/api/chat', async (req, res) => {
+  if (!genai) {
+    return res.status(503).json({
+      ok: false,
+      error: 'The assistant is not configured yet. Please email hello@bloomskilltech.in.',
+    })
+  }
+
+  // Accept only well-formed user/assistant turns with non-empty string content.
+  const raw = Array.isArray(req.body?.messages) ? req.body.messages : []
+  const turns = raw
+    .filter(
+      (m) =>
+        m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string',
+    )
+    .map((m) => ({ role: m.role, content: m.content.trim().slice(0, MAX_CHARS) }))
+    .filter((m) => m.content.length > 0)
+    .slice(-MAX_TURNS)
+
+  if (turns.length === 0 || turns[turns.length - 1].role !== 'user') {
+    return res.status(400).json({ ok: false, error: 'Please send a message.' })
+  }
+
+  // Gemini uses role "model" for the assistant; system prompt is passed
+  // separately as systemInstruction (not part of the conversation turns).
+  const contents = turns.map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }))
+
+  // Stream the answer back token-by-token over Server-Sent Events so the
+  // widget can render it as it's generated. We commit to a 200 SSE response up
+  // front, so any model error mid-stream is delivered as an SSE `error` event
+  // (the HTTP status can't change once streaming has begun).
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    'X-Accel-Buffering': 'no', // disable proxy buffering (nginx/Traefik)
+  })
+  const sse = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`)
+
+  try {
+    const stream = await genai.models.generateContentStream({
+      model: GEMINI_MODEL,
+      contents,
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+        maxOutputTokens: 1024,
+        temperature: 0.6,
+        // Disable "thinking" for snappy, low-latency replies — the system
+        // prompt already keeps answers concise and on-brand.
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    })
+
+    let sentAny = false
+    for await (const chunk of stream) {
+      const delta = chunk.text
+      if (delta) {
+        sentAny = true
+        sse({ delta })
+      }
+    }
+    if (!sentAny) sse({ delta: "Sorry, I didn't catch that — could you rephrase?" })
+    sse({ done: true })
+    res.end()
+  } catch (err) {
+    // Rate-limited (429) or an upstream hiccup (5xx) — tell the visitor to
+    // retry. Inspect status and message so we catch Gemini's quota errors too.
+    const status = typeof err?.status === 'number' ? err.status : 0
+    const msg = String(err?.message || '')
+    const busy =
+      status === 429 ||
+      status >= 500 ||
+      /\b(429|503|RESOURCE_EXHAUSTED|UNAVAILABLE|overloaded)\b/i.test(msg)
+    console[busy ? 'warn' : 'error']('[chat] stream failed:', msg || err)
+    sse({
+      error: busy
+        ? 'The assistant is busy right now — please try again in a moment.'
+        : 'Something went wrong. Please try again, or email hello@bloomskilltech.in.',
+    })
+    res.end()
   }
 })
 

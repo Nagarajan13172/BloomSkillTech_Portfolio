@@ -24,7 +24,7 @@ Confident, specific, slightly direct. Short sentences. Numbers over adjectives. 
 
 ### Hero
 **H1:** From idea to shipped product. One team.
-**Sub:** BloomSkill Tech is a digital product studio. We take you through Strategy, Design, Development and Delivery — without the handoffs that kill most projects. Built by a team from IIT Bombay, IIM Indore and NID Ahmedabad.
+**Sub:** BloomSkill Tech is a digital product studio. We take you through Define, Design, Develop and Deliver — without the handoffs that kill most projects. Built by a team from IIT , IIM and NID.
 **Primary CTA:** Book a strategy call
 **Secondary CTA:** See our work
 
@@ -43,7 +43,7 @@ At BloomSkill, the people who plan your product, design it, and build it sit on 
 ### The 4D Framework section
 **H2:** How we work: the 4D framework
 
-**1 — Strategy.**
+**1 — Define.**
 Before a single screen is designed, we define what wins. Market and competitor mapping, user definition, scope, pricing and revenue logic, and a phased roadmap. *Deliverable: a product strategy document and fixed-scope SOW you own, whoever you build with.*
 
 **2 — Design.**
@@ -96,7 +96,7 @@ One 30-minute call. We'll tell you honestly whether we're the right team — and
 One page, structured as the 4D framework expanded (reuse homepage 4D copy, add detail per stage: activities, deliverables, typical duration, "who's in the room" — roles only, no institute mapping). End with engagement models:
 
 **How to engage us:**
-- **Product Sprint (2–3 weeks):** Strategy + clickable prototype. For validating an idea before committing build budget.
+- **Product Sprint (2–3 weeks):** The Define stage + clickable prototype. For validating an idea before committing build budget.
 - **MVP Build (8–12 weeks):** Full 4D cycle to a launched product. Fixed scope, milestone-billed.
 - **Extended Team (monthly):** Our designers/engineers embedded with yours.
 
@@ -108,7 +108,7 @@ One page, structured as the 4D framework expanded (reuse homepage 4D copy, add d
 
 1. **Header:** Client/product name, one-line outcome, hero visual.
 2. **Snapshot box:** Industry · Timeline · Stack · Services used (which of the 4 Ds).
-3. **Strategy:** the problem, what we decided NOT to build, the plan.
+3. **Define:** the problem, what we decided NOT to build, the plan.
 4. **Design:** research insight → wireframe → final UI (show the Design Lead's actual artifacts; before/after where applicable).
 5. **Develop:** architecture decisions, stack, testing approach. One technical detail that shows depth (e.g., "escrow state machine with idempotent Razorpay webhooks").
 6. **Deliver:** launch process, performance numbers, what we handed over.

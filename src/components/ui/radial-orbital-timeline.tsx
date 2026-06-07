@@ -112,8 +112,9 @@ export default function RadialOrbitalTimeline({
           ref={orbitRef}
           style={{ perspective: "1000px" }}
         >
-          <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-[#0e6b4f] via-[#12805f] to-[#1f9d76] animate-pulse flex items-center justify-center z-10">
-            <div className="absolute w-20 h-20 rounded-full border border-[#3fe0a0]/30 animate-ping opacity-70"></div>
+          {/* Center orb uses the BloomSkill logo's lens colors (blue → indigo → magenta) */}
+          <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-[#4e7ace] via-[#5948a7] to-[#b24d9b] animate-pulse flex items-center justify-center z-10">
+            <div className="absolute w-20 h-20 rounded-full border border-white/25 animate-ping opacity-70"></div>
             <div
               className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
               style={{ animationDelay: "0.5s" }}
@@ -151,7 +152,7 @@ export default function RadialOrbitalTimeline({
                     isRelated ? "animate-pulse" : ""
                   } ${isActive || isRelated ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}
                   style={{
-                    background: `radial-gradient(circle, rgba(63,224,160,0.22) 0%, rgba(63,224,160,0) 70%)`,
+                    background: `radial-gradient(circle, rgba(182,160,224,0.25) 0%, rgba(182,160,224,0) 70%)`,
                     width: `${item.energy * 0.5 + 40}px`,
                     height: `${item.energy * 0.5 + 40}px`,
                     left: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
@@ -165,10 +166,10 @@ export default function RadialOrbitalTimeline({
                   border-2 transition-all duration-300 transform
                   ${
                     isActive
-                      ? "bg-[#0e6b4f] text-white border-[#3fe0a0] shadow-lg shadow-[#0e6b4f]/50 scale-125"
+                      ? "bg-[#5949a6] text-white border-[#e58bc4] shadow-lg shadow-[#5949a6]/50 scale-125"
                       : isRelated
-                      ? "bg-[#1f9d76]/30 text-white border-[#3fe0a0] animate-pulse"
-                      : "bg-[#161b22] text-white border-white/30 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:border-[#3fe0a0] group-hover:bg-[#0e6b4f]/40 group-hover:shadow-[0_0_18px_rgba(63,224,160,0.4)]"
+                      ? "bg-[#b24d9b]/30 text-white border-[#e58bc4] animate-pulse"
+                      : "bg-[#161425] text-white border-white/30 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:border-[#e58bc4] group-hover:bg-[#5949a6]/45 group-hover:shadow-[0_0_18px_rgba(137,127,208,0.45)]"
                   }
                 `}
                 >
@@ -198,7 +199,7 @@ export default function RadialOrbitalTimeline({
         {activeItem && (
           <Card className="absolute z-[300] left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 w-56 bg-[#101418]/92 backdrop-blur-xl border-white/15 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
             <CardContent className="p-4">
-              <span className="font-mono text-[0.62rem] tracking-[0.18em] text-[#3fe0a0]">
+              <span className="font-mono text-[0.62rem] tracking-[0.18em] text-[#e58bc4]">
                 {activeItem.date} · {activeItem.category}
               </span>
               <CardTitle className="text-base mt-1.5 text-white">

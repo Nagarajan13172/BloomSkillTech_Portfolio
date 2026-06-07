@@ -3,17 +3,23 @@ import { CtaCard } from '../components/CtaCard'
 import { CLIENTS } from '../data/clients'
 
 const STATS = [
-  { value: '4', label: 'clients shipped' },
+  { value: '5', label: 'clients shipped' },
   { value: '5.0', label: 'avg rating' },
-  { value: '4', label: 'industries' },
+  { value: '5', label: 'industries' },
   { value: '100%', label: 'delivered' },
 ]
 
-function Stars() {
+function Tags({ items }: { items: string[] }) {
+  const [type, ...work] = items
   return (
-    <span className="tstars" aria-label="Rated 5 out of 5">
-      <span aria-hidden="true">★★★★★</span>
-    </span>
+    <div className="tags">
+      <span className="tag tag--type">{type}</span>
+      {work.map((t) => (
+        <span className="tag" key={t}>
+          {t}
+        </span>
+      ))}
+    </div>
   )
 }
 
@@ -73,7 +79,7 @@ export function Clients() {
           <article className="tfeatured reveal">
             <div className="tfeatured-body">
               <span className="badge-num">featured client</span>
-              <Stars />
+              <Tags items={featured.tags} />
               <blockquote className="tquote tquote--lg">
                 <span className="tquote-mark">“</span>
                 {featured.quote}
@@ -120,7 +126,7 @@ export function Clients() {
                   <img src={c.image} alt={`${c.name} homepage`} loading="lazy" />
                   <span className="tcard-domain mono">{c.domain} ↗</span>
                 </a>
-                <Stars />
+                <Tags items={c.tags} />
                 <blockquote className="tquote">
                   <span className="tquote-mark">“</span>
                   {c.quote}

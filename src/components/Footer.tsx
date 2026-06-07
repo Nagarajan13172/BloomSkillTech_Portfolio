@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Socials } from './Socials'
 
-const PRACTICES = ['Strategy', 'Design', 'Develop', 'Deliver']
+const PRACTICES = ['Define', 'Design', 'Develop', 'Deliver']
 
 export function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="footer">
       <div className="wrap">
@@ -35,10 +32,6 @@ export function Footer() {
               </Link>
             ))}
           </div>
-        </div>
-        <div className="fbot">
-          <span>© {year} Bloomskill Tech — all rights reserved.</span>
-          <Socials />
         </div>
       </div>
     </footer>

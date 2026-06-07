@@ -16,7 +16,7 @@ This skill is the single source of truth for bloomskilltech.in. Every page, ever
 
 ## The brand in one paragraph
 
-BloomSkill Tech is a digital product studio in Salem that takes clients from idea to production with one team — no handoffs between freelance designers and dev shops. The service framework is **Strategy → Design → Develop → Deliver (the 4D framework)**, and the credibility engine is the team: graduates of **IIT Bombay, IIM Indore and NID Ahmedabad** work at BloomSkill. Mention the institutes as a collective team credential only — NEVER map a specific institute to a specific role, service stage, or person on any page. The proof points are real shipped products (Trainerr.in, anti-cheat exam platform, e-commerce builds) and a visible engineering process (CI/CD, automated testing, phased delivery, structured SOWs).
+BloomSkill Tech is a digital product studio in Salem that takes clients from idea to production with one team — no handoffs between freelance designers and dev shops. The service framework is **Define → Design → Develop → Deliver (the 4D framework)**, and the credibility engine is the team: graduates of **IIT Bombay, IIM Indore and NID Ahmedabad** work at BloomSkill. Mention the institutes as a collective team credential only — NEVER map a specific institute to a specific role, service stage, or person on any page. The proof points are real shipped products (Trainerr.in, anti-cheat exam platform, e-commerce builds) and a visible engineering process (CI/CD, automated testing, phased delivery, structured SOWs).
 
 ## Non-negotiable rules
 

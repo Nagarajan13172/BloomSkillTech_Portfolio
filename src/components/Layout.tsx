@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Nav } from './Nav'
 import { Footer } from './Footer'
-import { ThemeCustomizer } from './ThemeCustomizer'
+import { AskAI } from './AskAI'
 import { useReveal } from '../hooks/useReveal'
 
 export function Layout() {
@@ -14,7 +14,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <ThemeCustomizer />
+      <AskAI />
     </>
   )
 }

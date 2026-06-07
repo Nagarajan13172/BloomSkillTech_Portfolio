@@ -1,7 +1,7 @@
 /** Theme primitives shared by the provider and the customizer UI. */
 
 export type Mode = 'light' | 'dark'
-export type Palette = 'spectrum' | 'ember' | 'aurora' | 'verdant'
+export type Palette = 'spectrum' | 'ember' | 'aurora'
 export type FontKey = 'grotesk' | 'sora' | 'outfit' | 'inter'
 export type Radius = 'sharp' | 'soft' | 'round'
 
@@ -14,7 +14,7 @@ export interface ThemeState {
 
 export const DEFAULT_THEME: ThemeState = {
   mode: 'light',
-  palette: 'verdant',
+  palette: 'spectrum',
   font: 'grotesk',
   radius: 'soft',
 }
@@ -26,7 +26,6 @@ export const PALETTES: { key: Palette; label: string; swatch: string[] }[] = [
   { key: 'spectrum', label: 'Spectrum', swatch: ['#4f7acf', '#5949a6', '#b24d9b', '#f897bf'] },
   { key: 'ember', label: 'Ember', swatch: ['#ffab40', '#ff7a2c', '#e94f1d', '#ffc06b'] },
   { key: 'aurora', label: 'Aurora', swatch: ['#3fd0ff', '#2f9fd8', '#2f6fd0', '#5ce0d0'] },
-  { key: 'verdant', label: 'Verdant', swatch: ['#34d399', '#10b981', '#65a30d', '#bef264'] },
 ]
 
 export const FONTS: { key: FontKey; label: string; stack: string }[] = [

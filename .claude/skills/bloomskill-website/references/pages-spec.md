@@ -5,7 +5,7 @@
 ```
 /                      Home
 /services              The 4D framework expanded + engagement models
-/work                  Case study index (filter by D: strategy/design/develop/deliver)
+/work                  Case study index (filter by D: define/design/develop/deliver)
 /work/[slug]           Case study detail (markdown content collection)
 /about                 Team, story, values (institute credentials live here in full)
 /process               "How we build" — the engineering discipline page

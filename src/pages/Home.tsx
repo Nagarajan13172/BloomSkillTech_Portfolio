@@ -14,7 +14,7 @@ import { FinalCta } from '../components/FinalCta'
 const FOURD_ORBIT = [
   {
     id: 1,
-    title: 'Strategy',
+    title: 'Define',
     date: '01',
     category: 'Define what wins',
     icon: Target,
@@ -73,7 +73,7 @@ const INSTITUTES = ['IIT Bombay', 'IIM Indore', 'NID Ahmedabad']
 const FOURD = [
   {
     no: '01',
-    title: 'Strategy',
+    title: 'Define',
     copy: 'Before a single screen is designed, we define what wins. Market and competitor mapping, user definition, scope, pricing and revenue logic, and a phased roadmap.',
     deliver: 'A product strategy document and fixed-scope SOW you own, whoever you build with.',
   },
@@ -114,21 +114,27 @@ const PROOF = [
 
 // Real client quotes shown with company names only, per brand-and-content.md
 // (upgrade to name + role + metric + logo once permission is collected).
-const TESTIMONIALS = [
+// kiddipo: no testimonial supplied yet — shown as a client card, NOT an invented quote.
+interface Testimonial {
+  by: string
+  quote?: string
+  note?: string
+}
+
+const TESTIMONIALS: Testimonial[] = [
   {
+    by: 'SucceedEx',
+    quote:
+      'BloomSkill engineered the platform behind SucceedEx — AI-powered assessments, fraud-free proctoring and a placement pipeline that guides thousands of students from classroom to career.',
+  },
+  {
+    by: 'kiddipo',
+    note: 'An online store for kids’ and women’s wear — a full e-commerce build, from storefront and catalog to cart and checkout.',
+  },
+  {
+    by: 'Onfleek',
     quote:
       'Bloomskill Tech enhanced our platform’s performance and security with their full-stack expertise. Their dedication and customer-centric approach are pivotal to our success.',
-    by: 'Onfleek',
-  },
-  {
-    quote:
-      'Their cloud services and cybersecurity solutions strengthened our operations. The proactive support and professionalism are invaluable.',
-    by: 'Dofy Management',
-  },
-  {
-    quote:
-      'They modernised our digital infrastructure with a dynamic user experience that exceeded our expectations.',
-    by: 'Vaikuntam Realty Group',
   },
 ]
 
@@ -144,9 +150,9 @@ export function Home() {
               From idea to <span className="grad">shipped product</span>. One team.
             </h1>
             <p className="lede reveal d2">
-              BloomSkill Tech is a digital product studio. We take you through Strategy, Design,
-              Development and Delivery — without the handoffs that kill most projects. Built by a
-              team from IIT Bombay, IIM Indore and NID Ahmedabad.
+              BloomSkill Tech is a digital product studio. We take you through Define, Design,
+              Develop and Deliver — without the handoffs that kill most projects. Built by a
+              team from IIT, IIM and NID.
             </p>
             <div className="row cta-row reveal d3">
               <Link className="btn" to="/contact">
@@ -180,29 +186,6 @@ export function Home() {
         </div>
       </header>
 
-      {/* ===== PROBLEM / TURN ===== */}
-      <section className="sec">
-        <div className="wrap problem-grid">
-          <div className="reveal">
-            <span className="eyebrow">The problem</span>
-            <h2 className="h2">Most digital projects die in the handoff.</h2>
-            <p>
-              You hire a designer. Then a development agency. The design gets “adjusted” to fit what
-              the developers can build. Deadlines slip while two vendors blame each other. You pay
-              twice and launch late.
-            </p>
-          </div>
-          <div className="reveal d1">
-            <span className="eyebrow">The turn</span>
-            <h2 className="h2">We removed the handoff.</h2>
-            <p>
-              At BloomSkill, the people who plan your product, design it, and build it sit on the
-              same team, in the same standups, accountable to one timeline and one contract.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* ===== 4D FRAMEWORK ===== */}
       <section className="sec sec--tint">
         <div className="wrap">
@@ -225,8 +208,35 @@ export function Home() {
         </div>
       </section>
 
-      {/* ===== PROOF ===== */}
+      {/* ===== TESTIMONIALS ===== */}
       <section className="sec">
+        <div className="wrap">
+          <div className="shead reveal">
+            <span className="eyebrow">In their words</span>
+            <h2 className="h2">Teams that shipped with us.</h2>
+          </div>
+          <div className="tlist">
+            {TESTIMONIALS.map((t) => (
+              <figure key={t.by} className="tcard reveal">
+                {t.quote ? (
+                  <>
+                    <blockquote>“{t.quote}”</blockquote>
+                    <figcaption>— {t.by}</figcaption>
+                  </>
+                ) : (
+                  <>
+                    <p className="tcard-name">{t.by}</p>
+                    <p className="tcard-note">{t.note}</p>
+                  </>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PROOF ===== */}
+      <section className="sec sec--tint">
         <div className="wrap">
           <div className="shead reveal">
             <span className="eyebrow">Proof</span>
@@ -245,24 +255,6 @@ export function Home() {
                   Read the case study →
                 </Link>
               </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TESTIMONIALS ===== */}
-      <section className="sec sec--tint">
-        <div className="wrap">
-          <div className="shead reveal">
-            <span className="eyebrow">In their words</span>
-            <h2 className="h2">Teams that shipped with us.</h2>
-          </div>
-          <div className="tlist">
-            {TESTIMONIALS.map((t) => (
-              <figure key={t.by} className="tcard reveal">
-                <blockquote>“{t.quote}”</blockquote>
-                <figcaption>— {t.by}</figcaption>
-              </figure>
             ))}
           </div>
         </div>

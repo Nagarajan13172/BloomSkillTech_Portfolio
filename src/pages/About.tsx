@@ -22,13 +22,31 @@ const VALUES = [
   },
 ]
 
-const TEAM = [
+interface Member {
+  initials: string
+  name: string
+  role: string
+  disc: string
+  bio: string
+  /** Optional link to the member's portfolio / selected work. */
+  href?: string
+}
+
+const TEAM: Member[] = [
   {
     initials: 'Bh',
     name: 'Bhadrinathan',
     role: 'Engineering Lead',
     disc: 'Develop',
     bio: 'Architects systems end to end and leads full-stack builds — turning complex stacks into shippable products.',
+  },
+  {
+    initials: 'Ud',
+    name: 'Udhay',
+    role: 'Product Designer',
+    disc: 'Design',
+    bio: 'Leads product and interface design — research and flows turned into high-fidelity UI and a usable design system.',
+    href: 'https://udhayindesign.com',
   },
   {
     initials: 'Pr',
@@ -119,7 +137,19 @@ export function About() {
                 <h3>{m.name}</h3>
                 <p className="role">{m.role}</p>
                 <p className="bio">{m.bio}</p>
-                <span className="disc">{m.disc}</span>
+                <div className="tcard2-foot">
+                  <span className="disc">{m.disc}</span>
+                  {m.href && (
+                    <a
+                      className="tcard2-link"
+                      href={m.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View work ↗
+                    </a>
+                  )}
+                </div>
               </article>
             ))}
           </div>

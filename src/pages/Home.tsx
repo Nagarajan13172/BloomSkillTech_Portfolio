@@ -99,12 +99,12 @@ const FOURD = [
 
 const PROOF = [
   {
-    name: 'Trainerr.in',
-    copy: 'A two-sided marketplace for India’s training ecosystem: escrow payments, GST invoicing, Razorpay integration.',
+    name: 'Trinity Network',
+    copy: 'Our own VPN — encrypts your traffic, masks your IP and reaches content safely from anywhere, with a live dashboard to manage it.',
   },
   {
-    name: 'Secure exam platform',
-    copy: 'Desktop anti-cheat examination system with camera proctoring and real-time risk scoring.',
+    name: 'zerocode',
+    copy: 'A self-hosted code-execution sandbox in Rust — kernel-enforced isolation, sub-5ms job pickup and 20 languages out of the box.',
   },
   {
     name: 'Commerce builds',
@@ -251,9 +251,6 @@ export function Home() {
               <article key={p.name} className="proof-card reveal">
                 <h3 className="h3">{p.name}</h3>
                 <p>{p.copy}</p>
-                <Link className="link-arrow" to="/achievements">
-                  Read the case study →
-                </Link>
               </article>
             ))}
           </div>

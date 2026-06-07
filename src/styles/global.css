@@ -805,8 +805,6 @@ h4 {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 36px;
-  padding-bottom: 36px;
-  border-bottom: 1px solid var(--line);
 }
 .footer-grid h4 {
   font-size: 0.78rem;
@@ -831,17 +829,6 @@ h4 {
   margin-top: 16px;
   max-width: 34ch;
   font-size: 0.92rem;
-}
-.fbot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  font-family: var(--fm);
-  font-size: 0.74rem;
-  color: var(--faint);
-  flex-wrap: wrap;
-  padding-top: 28px;
 }
 .socs {
   display: flex;
@@ -3843,12 +3830,14 @@ a.spot-id:hover .dom {
 
 /* ---- About: team cards ---- */
 .team-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   margin-top: clamp(24px, 4vw, 40px);
 }
 .tcard2 {
+  flex: 0 1 calc((100% - 3 * 20px) / 4);
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -3914,8 +3903,8 @@ a.spot-id:hover .dom {
 }
 
 @media (max-width: 980px) {
-  .team-cards {
-    grid-template-columns: repeat(2, 1fr);
+  .tcard2 {
+    flex-basis: calc((100% - 20px) / 2);
   }
 }
 
@@ -3930,9 +3919,11 @@ a.spot-id:hover .dom {
   }
   .dstage-meta,
   .engage-grid,
-  .values-grid,
-  .team-cards {
+  .values-grid {
     grid-template-columns: 1fr;
+  }
+  .tcard2 {
+    flex-basis: 100%;
   }
 }
 

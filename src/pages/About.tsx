@@ -34,11 +34,33 @@ interface Member {
 
 const TEAM: Member[] = [
   {
+    initials: 'An',
+    name: 'AnishKumar',
+    role: 'CEO & Cloud Engineer',
+    disc: 'Deliver',
+    bio: 'Owns end-to-end cloud deployments — provisioning, releases and the infrastructure that gets products live and keeps them running.',
+    href: 'https://anishkumar.cloud',
+  },
+  {
     initials: 'Bh',
     name: 'Bhadrinathan',
     role: 'Engineering Lead',
     disc: 'Develop',
     bio: 'Architects systems end to end and leads full-stack builds — turning complex stacks into shippable products.',
+  },
+  {
+    initials: 'Na',
+    name: 'Nagarajan',
+    role: 'Frontend Engineer',
+    disc: 'Design',
+    bio: 'Builds the interface layer — accessible, fast, and faithful to the design system down to the interaction.',
+  },
+  {
+    initials: 'Pr',
+    name: 'Prithiviraj',
+    role: 'Backend Engineer',
+    disc: 'Develop',
+    bio: 'Builds the server side — APIs, data models and the business logic the product runs on, with reliability built in.',
   },
   {
     initials: 'Ud',
@@ -47,20 +69,6 @@ const TEAM: Member[] = [
     disc: 'Design',
     bio: 'Leads product and interface design — research and flows turned into high-fidelity UI and a usable design system.',
     href: 'https://udhayindesign.com',
-  },
-  {
-    initials: 'Pr',
-    name: 'Prithiviraj',
-    role: 'DevOps & Automation',
-    disc: 'Deliver',
-    bio: 'Lives in pipelines and infrastructure — CI/CD, monitoring and the automation that keeps launches calm.',
-  },
-  {
-    initials: 'Na',
-    name: 'Nagarajan',
-    role: 'Frontend Engineer',
-    disc: 'Design',
-    bio: 'Builds the interface layer — accessible, fast, and faithful to the design system down to the interaction.',
   },
 ]
 

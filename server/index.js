@@ -19,9 +19,11 @@ const {
   NODE_ENV,
   // Google Gemini powers the "Ask AI" assistant (free tier works fine).
   GEMINI_API_KEY,
-  // Override the chat model if you like. gemini-2.5-flash is fast, smart and
-  // free-tier friendly; gemini-2.5-flash-lite is even lighter.
-  GEMINI_MODEL = 'gemini-2.5-flash',
+  // gemini-2.5-flash-lite is the default: it has the most generous free-tier
+  // daily quota, which matters for a public widget (gemini-2.5-flash free tier
+  // is only ~20 requests/day). Set GEMINI_MODEL=gemini-2.5-flash for a slightly
+  // stronger model, or any other Gemini model id.
+  GEMINI_MODEL = 'gemini-2.5-flash-lite',
 } = process.env
 
 if (!SMTP_USER || !SMTP_PASS) {

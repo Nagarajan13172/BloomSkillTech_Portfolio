@@ -3456,17 +3456,20 @@ a.spot-id:hover .dom {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  gap: 20px;
 }
 .fourd-step {
   background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
   padding: 28px 24px 28px;
   display: flex;
   flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.fourd-step:hover {
+  border-color: var(--magenta);
+  transform: translateY(-3px);
 }
 .fourd-no {
   font-family: var(--fm);

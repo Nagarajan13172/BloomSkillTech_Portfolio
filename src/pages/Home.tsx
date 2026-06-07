@@ -1,257 +1,275 @@
 import { Link } from 'react-router-dom'
-import ShaderBackground from '@/components/ui/shader-background'
+import { Target, PenTool, Code2, Rocket } from 'lucide-react'
 import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline'
-import { Rocket, FlaskConical, Cloud, Trophy, Boxes } from 'lucide-react'
-import { Ticker } from '../components/Ticker'
-import { CtaCard } from '../components/CtaCard'
-import { CLIENTS } from '../data/clients'
-import { SERVICES } from '../data/services'
+import { FinalCta } from '../components/FinalCta'
 
-interface Principle {
-  no: string
-  title: string
-  copy: string
-}
+/**
+ * Home — rebuilt to the bloomskill-website skill (brand-and-content.md +
+ * pages-spec.md). Order: hero → credibility strip → problem/turn → 4D framework
+ * → proof → testimonials → final CTA. Copy is taken from the skill; do not
+ * "improve" it ad hoc — change the reference file first.
+ */
 
-const PRINCIPLES: Principle[] = [
-  {
-    no: '/01',
-    title: 'Ethical Design & Digital Wellbeing',
-    copy: 'Technology that respects people’s time, attention and trust — designed responsibly from the first wireframe.',
-  },
-  {
-    no: '/02',
-    title: 'Continuous Improvement & Innovation',
-    copy: 'We never stop iterating — pushing the boundaries of technology to unlock new possibilities.',
-  },
-  {
-    no: '/03',
-    title: 'Empowerment of a Remote Workforce',
-    copy: 'A distributed, collaborative team — assembled around the problem, not the postcode.',
-  },
-  {
-    no: '/04',
-    title: 'Knowledge Sharing & Collaboration',
-    copy: 'From college workshops to open collaboration, we grow the ecosystem we’re part of.',
-  },
-]
-
-const JOURNEY = [
+// Hero visual: the 4D framework as an interactive orbit around a "ship" core.
+const FOURD_ORBIT = [
   {
     id: 1,
-    title: 'Founded',
-    date: '2022',
-    content: 'Bloomskill Tech is born — a digital engineering studio built to unlock potential through innovative solutions.',
-    category: 'Origin',
-    icon: Rocket,
+    title: 'Strategy',
+    date: '01',
+    category: 'Define what wins',
+    icon: Target,
     relatedIds: [2],
     status: 'completed' as const,
-    energy: 100,
+    energy: 96,
+    content:
+      'Market and competitor mapping, scope, pricing and a phased roadmap — what wins, before a single screen is drawn.',
+    deliverable: 'Product strategy doc + fixed-scope SOW you own.',
   },
   {
     id: 2,
-    title: 'Virtual Labs',
-    date: '2023',
-    content: 'Launched interactive virtual laboratories for immersive, hands-on learning — our origin practice.',
-    category: 'EdTech',
-    icon: FlaskConical,
+    title: 'Design',
+    date: '02',
+    category: 'Make it usable',
+    icon: PenTool,
     relatedIds: [1, 3],
     status: 'completed' as const,
-    energy: 88,
+    energy: 90,
+    content:
+      'Research-led UX, wireframes, high-fidelity UI and a reusable design system — built to convert and built to be built.',
+    deliverable: 'Clickable prototype + design system in Figma.',
   },
   {
     id: 3,
-    title: 'Web & Cloud',
-    date: '2024',
-    content: 'Expanded into full-stack web development and resilient cloud services for real businesses.',
-    category: 'Engineering',
-    icon: Cloud,
+    title: 'Develop',
+    date: '03',
+    category: 'Build it right',
+    icon: Code2,
     relatedIds: [2, 4],
     status: 'completed' as const,
-    energy: 82,
+    energy: 94,
+    content:
+      'Proven stacks (FastAPI, PostgreSQL, React, Rust) with automated tests, code review and security hardening on every commit.',
+    deliverable: 'Production code, 80%+ test coverage, CI checks.',
   },
   {
     id: 4,
-    title: 'CTF Champions',
-    date: '2025',
-    content: '1st in Yukthi CTF prelims and 1st at Tom-CTF grand finals — proven in the security arena.',
-    category: 'Security',
-    icon: Trophy,
-    relatedIds: [3, 5],
-    status: 'completed' as const,
-    energy: 96,
+    title: 'Deliver',
+    date: '04',
+    category: 'Launch & support',
+    icon: Rocket,
+    relatedIds: [3],
+    status: 'in-progress' as const,
+    energy: 88,
+    content:
+      'CI/CD, staged deploys, monitoring, performance budgets and handover docs — plus post-launch support so you’re never stranded.',
+    deliverable: 'A live product, a runbook, and a team that answers.',
+  },
+]
+
+// Institutes are named only as a collective team credential — never mapped to a
+// stage, role or person (skill: brand-and-content.md institute mention rule).
+const INSTITUTES = ['IIT Bombay', 'IIM Indore', 'NID Ahmedabad']
+
+const FOURD = [
+  {
+    no: '01',
+    title: 'Strategy',
+    copy: 'Before a single screen is designed, we define what wins. Market and competitor mapping, user definition, scope, pricing and revenue logic, and a phased roadmap.',
+    deliver: 'A product strategy document and fixed-scope SOW you own, whoever you build with.',
   },
   {
-    id: 5,
-    title: 'Products',
-    date: '2025',
-    content: 'Shipped our own products — Trinity Network (VPN) and zerocode, a Rust code-execution sandbox.',
-    category: 'Products',
-    icon: Boxes,
-    relatedIds: [4],
-    status: 'in-progress' as const,
-    energy: 72,
+    no: '02',
+    title: 'Design',
+    copy: 'Research-led UX and interface design. User flows, wireframes, high-fidelity UI, and a reusable design system — not just pretty screens, but screens engineered to convert and built to be built.',
+    deliver: 'Clickable prototype + complete design system in Figma.',
+  },
+  {
+    no: '03',
+    title: 'Develop',
+    copy: 'Disciplined engineering with modern, proven stacks (FastAPI, PostgreSQL, React, Rust where performance demands it). Every build ships with automated tests, code review, security hardening, and documentation.',
+    deliver: 'Production code with 80%+ automated test coverage and CI checks on every commit.',
+  },
+  {
+    no: '04',
+    title: 'Deliver',
+    copy: 'Launch is a process, not a hope. CI/CD pipelines, staged deployments, monitoring, performance budgets, training and handover docs — plus post-launch support so you’re never stranded.',
+    deliver: 'A live product, a runbook, and a team that picks up the phone.',
+  },
+]
+
+const PROOF = [
+  {
+    name: 'Trainerr.in',
+    copy: 'A two-sided marketplace for India’s training ecosystem: escrow payments, GST invoicing, Razorpay integration.',
+  },
+  {
+    name: 'Secure exam platform',
+    copy: 'Desktop anti-cheat examination system with camera proctoring and real-time risk scoring.',
+  },
+  {
+    name: 'Commerce builds',
+    copy: 'End-to-end e-commerce platforms with admin panels, courier API integrations and payment flows for Indian retail.',
+  },
+]
+
+// Real client quotes shown with company names only, per brand-and-content.md
+// (upgrade to name + role + metric + logo once permission is collected).
+const TESTIMONIALS = [
+  {
+    quote:
+      'Bloomskill Tech enhanced our platform’s performance and security with their full-stack expertise. Their dedication and customer-centric approach are pivotal to our success.',
+    by: 'Onfleek',
+  },
+  {
+    quote:
+      'Their cloud services and cybersecurity solutions strengthened our operations. The proactive support and professionalism are invaluable.',
+    by: 'Dofy Management',
+  },
+  {
+    quote:
+      'They modernised our digital infrastructure with a dynamic user experience that exceeded our expectations.',
+    by: 'Vaikuntam Realty Group',
   },
 ]
 
 export function Home() {
   return (
     <>
-      {/* No page-level <Orbs> here: the hero's opaque dark background hides them
-          everywhere except where the blue orb bled up behind the transparent
-          nav — that stray blue fade was the only thing they produced. */}
-
-      {/* ===== HERO (with 21st.dev WebGL shader background) ===== */}
-      <header className="hero">
-        <ShaderBackground className="hero-shader" />
-        <div className="hero-scrim" />
-        <div className="wrap hero-grid">
-          <div>
-            <span className="eyebrow reveal">digital engineering studio · est. 2022</span>
+      {/* ===== HERO ===== */}
+      <header className="ehero">
+        <div className="wrap ehero-grid">
+          <div className="ehero-copy">
+            <span className="eyebrow reveal">Digital product studio · Salem</span>
             <h1 className="display reveal d1">
-              Engineering ideas into <span className="grad">scalable</span> products.
+              From idea to <span className="grad">shipped product</span>. One team.
             </h1>
             <p className="lede reveal d2">
-              Bloomskill Tech pairs engineering depth with creative craft — shipping web, cloud,
-              cybersecurity and DevOps that move your business forward.
+              BloomSkill Tech is a digital product studio. We take you through Strategy, Design,
+              Development and Delivery — without the handoffs that kill most projects. Built by a
+              team from IIT Bombay, IIM Indore and NID Ahmedabad.
             </p>
             <div className="row cta-row reveal d3">
               <Link className="btn" to="/contact">
-                Start a project ↗
+                Book a strategy call ↗
               </Link>
-              <Link className="btn btn--outline-light" to="/about">
-                Our story
+              <Link className="btn btn--ghost" to="/achievements">
+                See our work
               </Link>
-            </div>
-            <div className="stats reveal d4">
-              <div>
-                <strong>2022</strong>
-                <span>founded</span>
-              </div>
-              <div>
-                <strong>
-                  1<sup>st</sup>
-                </strong>
-                <span>yukthi ctf '25</span>
-              </div>
-              <div>
-                <strong>6+</strong>
-                <span>workshops</span>
-              </div>
-              <div>
-                <strong>4</strong>
-                <span>practices</span>
-              </div>
             </div>
           </div>
 
-          <div className="hero-orbit reveal d2">
-            <RadialOrbitalTimeline timelineData={JOURNEY} />
+          <div className="ehero-visual reveal d2">
+            <div className="hero-orbit">
+              <RadialOrbitalTimeline timelineData={FOURD_ORBIT} />
+            </div>
+            <p className="ehero-hint">The 4D framework — tap a stage</p>
+          </div>
+        </div>
+
+        <div className="wrap">
+          <div className="cred-strip reveal d4">
+            <span className="cred-lead">Our team includes graduates of</span>
+            <div className="cred-names">
+              {INSTITUTES.map((i) => (
+                <span className="cred-name" key={i}>
+                  {i}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </header>
 
-      <Ticker />
-
-      {/* ===== SERVICES ===== */}
-      <section className="sec" id="services">
-        <div className="wrap">
-          <div className="shead reveal">
-            <span className="eyebrow">01 / what we do</span>
-            <h2 className="h2">Capabilities engineered to ship, scale and secure.</h2>
-          </div>
-          <div className="svc-grid">
-            {SERVICES.map((s, i) => (
-              <article key={s.num} className={`svc reveal${i % 3 === 1 ? ' d1' : i % 3 === 2 ? ' d2' : ''}`}>
-                <div className="card-media">
-                  <img src={s.img} alt={s.title} loading="lazy" />
-                </div>
-                <span className="num">{s.num}</span>
-                <h3 className="h3">{s.title}</h3>
-                <p>{s.copy}</p>
-                <div className="tags">
-                  {s.tags.map((t) => (
-                    <span key={t} className="tag">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-            <article className="svc svc--cta reveal d2">
-              <h3 className="h3">Have something else in mind?</h3>
-              <p>If it lives at the intersection of tech and imagination, we want to build it.</p>
-              <Link className="btn btn--white" to="/contact" style={{ alignSelf: 'flex-start' }}>
-                Let’s scope it ↗
-              </Link>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== WHY US ===== */}
-      <section className="sec sec--tint">
-        <div className="wrap why">
-          <div className="shead" style={{ maxWidth: 380 }}>
-            <span className="eyebrow reveal">02 / why choose us</span>
-            <h2 className="h2 reveal d1">Principles we build by.</h2>
-            <p className="lede reveal d2" style={{ fontSize: '1.05rem' }}>
-              A partner that treats your platform, team and users with care.
+      {/* ===== PROBLEM / TURN ===== */}
+      <section className="sec">
+        <div className="wrap problem-grid">
+          <div className="reveal">
+            <span className="eyebrow">The problem</span>
+            <h2 className="h2">Most digital projects die in the handoff.</h2>
+            <p>
+              You hire a designer. Then a development agency. The design gets “adjusted” to fit what
+              the developers can build. Deadlines slip while two vendors blame each other. You pay
+              twice and launch late.
             </p>
           </div>
-          <div className="wlist">
-            {PRINCIPLES.map((p, i) => (
-              <div key={p.no} className={`witem reveal${i ? ` d${i}` : ''}`}>
-                <span className="wno">{p.no}</span>
-                <div>
-                  <h3 className="h3">{p.title}</h3>
-                  <p>{p.copy}</p>
-                </div>
-              </div>
+          <div className="reveal d1">
+            <span className="eyebrow">The turn</span>
+            <h2 className="h2">We removed the handoff.</h2>
+            <p>
+              At BloomSkill, the people who plan your product, design it, and build it sit on the
+              same team, in the same standups, accountable to one timeline and one contract.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4D FRAMEWORK ===== */}
+      <section className="sec sec--tint">
+        <div className="wrap">
+          <div className="shead reveal">
+            <span className="eyebrow">How we work</span>
+            <h2 className="h2">The 4D framework.</h2>
+          </div>
+          <ol className="fourd">
+            {FOURD.map((d) => (
+              <li key={d.no} className="fourd-step reveal">
+                <span className="fourd-no">{d.no}</span>
+                <h3 className="h3">{d.title}</h3>
+                <p>{d.copy}</p>
+                <p className="fourd-deliver">
+                  <strong>Deliverable:</strong> {d.deliver}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ===== PROOF ===== */}
+      <section className="sec">
+        <div className="wrap">
+          <div className="shead reveal">
+            <span className="eyebrow">Proof</span>
+            <h2 className="h2">We don’t just build for clients. We build for ourselves.</h2>
+            <p className="lede">
+              The same team, stack and standards run our own products — so we feel every shortcut
+              we’d be tempted to take.
+            </p>
+          </div>
+          <div className="proof-grid">
+            {PROOF.map((p) => (
+              <article key={p.name} className="proof-card reveal">
+                <h3 className="h3">{p.name}</h3>
+                <p>{p.copy}</p>
+                <Link className="link-arrow" to="/achievements">
+                  Read the case study →
+                </Link>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== CLIENTS (teaser → full Client Spotlight page) ===== */}
-      <section className="sec" id="clients">
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="sec sec--tint">
         <div className="wrap">
           <div className="shead reveal">
-            <span className="eyebrow">03 / client spotlights</span>
-            <h2 className="h2">Trusted by teams shipping real products.</h2>
+            <span className="eyebrow">In their words</span>
+            <h2 className="h2">Teams that shipped with us.</h2>
           </div>
-          <div className="clients-grid">
-            {CLIENTS.slice(0, 2).map((c, i) => (
-              <figure key={c.name} className={`quote reveal${i % 2 ? ' d1' : ''}`}>
-                <div className="card-media">
-                  <img src={c.image} alt={`${c.name} — ${c.service}`} loading="lazy" />
-                </div>
-                <div className="row" style={{ gap: 14 }}>
-                  <span className="monogram">{c.initials}</span>
-                  <div>
-                    <strong>{c.name}</strong>
-                    <div className="mono muted" style={{ fontSize: '.74rem' }}>
-                      {c.domain}
-                    </div>
-                  </div>
-                </div>
-                <blockquote>“{c.quote}”</blockquote>
-                <figcaption className="mono muted">— {c.by}</figcaption>
+          <div className="tlist">
+            {TESTIMONIALS.map((t) => (
+              <figure key={t.by} className="tcard reveal">
+                <blockquote>“{t.quote}”</blockquote>
+                <figcaption>— {t.by}</figcaption>
               </figure>
             ))}
           </div>
-          <div className="row see-all reveal">
-            <Link className="btn" to="/clients">
-              See all client stories ↗
-            </Link>
-            <span className="mono muted" style={{ fontSize: '.8rem' }}>
-              {CLIENTS.length} partners · web · cloud · security
-            </span>
-          </div>
         </div>
       </section>
 
-      <CtaCard secondaryLabel="See our work" secondaryTo="/achievements" />
+      {/* ===== FINAL CTA ===== */}
+      <FinalCta />
     </>
   )
 }

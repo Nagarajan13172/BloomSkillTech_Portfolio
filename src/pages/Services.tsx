@@ -1,156 +1,197 @@
 import { Link } from 'react-router-dom'
-import { CtaCard } from '../components/CtaCard'
-import { SERVICES } from '../data/services'
+import { FinalCta } from '../components/FinalCta'
 
-const STATS = [
-  { value: '5', label: 'core practices' },
-  { value: '2022', label: 'founded' },
-  { value: '13th', label: "yukthi ctf '24" },
-  { value: '6+', label: 'workshops led' },
-]
+/**
+ * Services — the 4D framework expanded (brand-and-content.md + pages-spec.md).
+ * One service story, not five: cloud/security/DevOps fold in as capabilities
+ * under Develop/Deliver. Anchors (#strategy …) are shareable.
+ */
 
-const PROCESS = [
+interface Stage {
+  id: string
+  no: string
+  title: string
+  who: string
+  duration: string
+  intro: string
+  activities: string[]
+  deliverable: string
+}
+
+const STAGES: Stage[] = [
   {
+    id: 'strategy',
     no: '01',
-    title: 'Discover',
-    copy: 'We map the problem, constraints and goals before a single line of code — so we build the right thing.',
+    title: 'Strategy',
+    who: 'A strategist and you',
+    duration: '1–2 weeks',
+    intro:
+      'Before a single screen is designed, we define what wins — applied to your product, not a textbook.',
+    activities: [
+      'Market and competitor mapping',
+      'User definition and jobs-to-be-done',
+      'Scope, pricing and revenue logic',
+      'A phased delivery roadmap',
+    ],
+    deliverable: 'A product strategy document and a fixed-scope SOW you own — whoever you build with.',
   },
   {
+    id: 'design',
     no: '02',
     title: 'Design',
-    copy: 'Architecture and interface decisions made deliberately and validated early, not after launch.',
+    who: 'Product designers',
+    duration: '2–4 weeks',
+    intro:
+      'Research-led UX and interface design — not just pretty screens, but screens engineered to convert and built to be built.',
+    activities: [
+      'User flows and wireframes',
+      'High-fidelity UI design',
+      'A reusable design system',
+      'Clickable, testable prototype',
+    ],
+    deliverable: 'A clickable prototype plus a complete design system in Figma.',
   },
   {
+    id: 'develop',
     no: '03',
-    title: 'Build',
-    copy: 'Tight iterations with CI/CD, code review and automated checks — momentum without the chaos.',
+    title: 'Develop',
+    who: 'Engineers',
+    duration: '6–12 weeks',
+    intro:
+      'Proven, modern stacks with discipline baked in — FastAPI, PostgreSQL, React, and Rust where performance demands it. Cloud, security and DevOps live here, as capabilities, not separate products.',
+    activities: [
+      'Automated tests and code review on every commit',
+      'Security hardening and dependency auditing',
+      'Cloud infrastructure and CI/CD setup',
+      'Documentation as you go',
+    ],
+    deliverable: 'Production code with 80%+ automated test coverage and CI checks on every commit.',
   },
   {
+    id: 'deliver',
     no: '04',
-    title: 'Launch',
-    copy: 'Deploy, harden and measure — then keep improving. We treat shipping as the start, not the finish.',
+    title: 'Deliver',
+    who: 'The whole team',
+    duration: 'Launch + ongoing',
+    intro: 'Launch is a process, not a hope — and we stay after the launch.',
+    activities: [
+      'CI/CD pipelines and staged deployments',
+      'Monitoring and performance budgets',
+      'Training and handover documentation',
+      'Post-launch support',
+    ],
+    deliverable: 'A live product, a runbook, and a team that picks up the phone.',
+  },
+]
+
+interface Engagement {
+  duration: string
+  title: string
+  copy: string
+}
+
+const ENGAGE: Engagement[] = [
+  {
+    duration: '2–3 weeks',
+    title: 'Product Sprint',
+    copy: 'Strategy plus a clickable prototype. For validating an idea before you commit build budget.',
+  },
+  {
+    duration: '8–12 weeks',
+    title: 'MVP Build',
+    copy: 'The full 4D cycle to a launched product. Fixed scope, milestone-billed.',
+  },
+  {
+    duration: 'Monthly',
+    title: 'Extended Team',
+    copy: 'Our designers and engineers embedded alongside yours.',
   },
 ]
 
 export function Services() {
   return (
     <>
-      {/* ===== AURORA HERO (succeedex-inspired editorial gradient mesh) ===== */}
-      <header className="svc-hero">
-        <div className="aurora" aria-hidden="true" />
-        <div className="wrap svc-hero-inner">
-          <span className="eyebrow--rules">what we do · 2025 cycle</span>
-          <h1 className="svc-hero-title">
-            The full <span className="grad-on-dark">service menu</span>.
+      {/* ===== HERO ===== */}
+      <header className="page-hero">
+        <div className="wrap">
+          <span className="eyebrow reveal">Services · the 4D framework</span>
+          <h1 className="display reveal d1">
+            One team, four disciplines, <span className="grad">one timeline</span>.
           </h1>
-          <p className="svc-hero-sub">
-            One studio for the whole stack — web, cloud, security, automation and virtual labs.
-            Pick a practice below, or bring us the problem and we’ll scope it end to end.
+          <p className="lede reveal d2">
+            Strategy, Design, Development and Delivery under one roof — the same people, the same
+            standups, accountable to one contract. Here is what each stage includes.
           </p>
-          <div className="row svc-hero-cta">
+          <div className="row cta-row reveal d3">
             <Link className="btn" to="/contact">
-              Start a project ↗
+              Book a strategy call ↗
             </Link>
-            <a className="btn btn--glass" href="#menu">
-              Browse the menu ↓
+            <a className="btn btn--ghost" href="#engage">
+              See engagement models ↓
             </a>
-          </div>
-
-          <div className="glass-stats">
-            {STATS.map((s, i) => (
-              <div className="glass-card" key={s.label}>
-                <strong>{s.value}</strong>
-                <span>{s.label}</span>
-                {i === 0 && (
-                  <svg className="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
-                    <polyline
-                      points="0,24 16,18 32,20 48,10 64,13 80,5 100,7"
-                      fill="none"
-                      stroke="url(#sg)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <defs>
-                      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0" stopColor="#90c0f1" />
-                        <stop offset="1" stopColor="#f897bf" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                )}
-              </div>
-            ))}
           </div>
         </div>
       </header>
 
-      {/* ===== SERVICE MENU (editorial list with hover image reveal) ===== */}
-      <section className="sec" id="menu">
+      {/* ===== 4D STAGES ===== */}
+      <section className="sec">
         <div className="wrap">
-          <div className="shead reveal">
-            <span className="eyebrow">01 / the menu</span>
-            <h2 className="h2">Five practices, one team.</h2>
-            <p className="lede">
-              Hover a line to preview it. Every engagement is delivered by the same distributed crew —
-              no hand-offs, no agency markup.
-            </p>
-          </div>
-
-          <div className="menu">
-            {SERVICES.map((s, i) => (
-              <Link
-                key={s.slug}
-                to="/contact"
-                className="menu-row reveal"
-                aria-label={`${s.title} — start a project`}
-              >
-                <span className="menu-num">{String(i + 1).padStart(2, '0')}</span>
-                <div className="menu-main">
-                  <h3 className="menu-title">{s.title}</h3>
-                  <p className="menu-tagline">{s.tagline}</p>
+          {STAGES.map((s) => (
+            <article id={s.id} key={s.id} className="dstage reveal">
+              <div className="dstage-head">
+                <span className="dstage-no">{s.no}</span>
+                <div>
+                  <h2 className="h2">{s.title}</h2>
+                  <p className="dstage-who">
+                    <span>Who’s in the room:</span> {s.who}
+                  </p>
                 </div>
-                <div className="menu-aside">
-                  <div className="menu-tags">
-                    {s.tags.map((t) => (
-                      <span className="tag" key={t}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <span className="menu-thumb">
-                    <img src={s.img} alt="" loading="lazy" />
-                  </span>
-                </div>
-                <span className="menu-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== APPROACH (glass step cards) ===== */}
-      <section className="sec sec--tint">
-        <div className="wrap">
-          <div className="shead reveal">
-            <span className="eyebrow">02 / how we work</span>
-            <h2 className="h2">A calm path from idea to shipped.</h2>
-          </div>
-          <div className="process">
-            {PROCESS.map((p, i) => (
-              <div className={`step reveal${i ? ` d${i}` : ''}`} key={p.no}>
-                <span className="step-no">{p.no}</span>
-                <h3 className="h3">{p.title}</h3>
-                <p className="muted">{p.copy}</p>
+                <span className="dstage-dur">{s.duration}</span>
               </div>
-            ))}
-          </div>
+              <p className="dstage-lede">{s.intro}</p>
+              <div className="dstage-meta">
+                <div>
+                  <h4>Activities</h4>
+                  <ul>
+                    {s.activities.map((a) => (
+                      <li key={a}>{a}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4>Deliverable</h4>
+                  <p>{s.deliverable}</p>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      <CtaCard secondaryLabel="See our work" secondaryTo="/clients" />
+      {/* ===== ENGAGEMENT MODELS ===== */}
+      <section className="sec sec--tint" id="engage">
+        <div className="wrap">
+          <div className="shead reveal">
+            <span className="eyebrow">How to engage us</span>
+            <h2 className="h2">Three ways to work with us.</h2>
+          </div>
+          <div className="engage-grid">
+            {ENGAGE.map((e) => (
+              <article key={e.title} className="engage-card reveal">
+                <span className="engage-dur">{e.duration}</span>
+                <h3 className="h3">{e.title}</h3>
+                <p>{e.copy}</p>
+              </article>
+            ))}
+          </div>
+          <p className="engage-note">
+            Milestone-based, GST invoiced, no surprises. SOWs are custom —{' '}
+            <Link to="/contact">tell us what you’re building</Link>.
+          </p>
+        </div>
+      </section>
+
+      <FinalCta />
     </>
   )
 }

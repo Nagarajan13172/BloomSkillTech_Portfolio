@@ -5,8 +5,8 @@
   "type": "module",
   "description": "Bloomskill Tech portfolio — Direction D · Spectrum, built in React + TypeScript.",
   "scripts": {
-    "dev": "concurrently -k -n WEB,API -c cyan,magenta \"npm:dev:web\" \"npm:dev:api\"",
-    "dev:web": "vite",
+    "dev": "concurrently -k -n WEB,API -c cyan,magenta \"npm:dev:web\" \"npm:dev:api\" ",
+    "dev:web": "vite --host 0.0.0.0 --port 5173",
     "dev:api": "node --watch server/index.js",
     "build": "tsc -b && vite build",
     "start": "node server/index.js",

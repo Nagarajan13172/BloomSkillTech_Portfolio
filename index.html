@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/bst-logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Bloomskill Tech — a digital engineering studio. Web, cloud, cybersecurity, DevOps and virtual labs. Unlocking potential through innovative solutions."
-    />
-    <title>Bloomskill Tech — Unlocking Potential Through Innovative Solutions</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Jura:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      // Apply persisted theme before paint to avoid a flash of the wrong theme.
-      (function () {
-        try {
-          var t = JSON.parse(localStorage.getItem('bst-theme') || '{}')
-          var e = document.documentElement
-          e.dataset.mode = t.mode || 'dark'
-          e.dataset.palette = t.palette || 'spectrum'
-          e.dataset.font = t.font || 'grotesk'
-          e.dataset.radius = t.radius || 'soft'
-        } catch (_) {
-          var d = document.documentElement
-          d.dataset.mode = 'dark'
-          d.dataset.palette = 'spectrum'
-          d.dataset.font = 'grotesk'
-          d.dataset.radius = 'soft'
-        }
-      })()
-    </script>
-  </head>
-  <body>
-    <!-- instant splash: covers the viewport until the React loader paints (no flash) -->
-    <div id="boot" style="position:fixed;inset:0;background:#0b0a1c;z-index:9999"></div>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/bst-logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="One team from idea to shipped product — strategy, design, development and delivery. Our team includes IIT Bombay, IIM Indore and NID Ahmedabad graduates. Based in Salem, building for India." />
+  <title>BloomSkill Tech — Product Studio in Salem | Strategy, Design, Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Jura:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <script>
+    // Apply persisted theme before paint to avoid a flash of the wrong theme.
+    (function () {
+      try {
+        var t = JSON.parse(localStorage.getItem('bst-theme') || '{}')
+        var e = document.documentElement
+        e.dataset.mode = t.mode || 'light'
+        e.dataset.palette = t.palette || 'verdant'
+        e.dataset.font = t.font || 'grotesk'
+        e.dataset.radius = t.radius || 'soft'
+      } catch (_) {
+        var d = document.documentElement
+        d.dataset.mode = 'light'
+        d.dataset.palette = 'verdant'
+        d.dataset.font = 'grotesk'
+        d.dataset.radius = 'soft'
+      }
+    })()
+  </script>
+</head>
+
+<body>
+  <!-- instant splash: covers the viewport until the React loader paints (no flash) -->
+  <div id="boot" style="position:fixed;inset:0;background:#fafaf7;z-index:9999"></div>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -47,7 +47,7 @@ export function Nav() {
             {mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
           </button>
           <Link className="btn" to={onContact ? '#start' : '/contact'}>
-            {onContact ? 'Start a project' : 'Get in touch'} ↗
+            {onContact ? 'Start a project' : 'Book a strategy call'} ↗
           </Link>
           <button
             className={`menu-btn${open ? ' open' : ''}`}
@@ -75,7 +75,7 @@ export function Nav() {
           </NavLink>
         ))}
         <Link to="/contact" style={{ color: 'var(--magenta)' }} onClick={() => setOpen(false)}>
-          Get in touch ↗
+          Book a strategy call ↗
         </Link>
       </div>
     </header>

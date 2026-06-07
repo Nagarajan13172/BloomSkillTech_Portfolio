@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Socials } from './Socials'
 
-const PRACTICES = ['Web Development', 'Cloud Services', 'Cybersecurity', 'DevOps']
+const PRACTICES = ['Strategy', 'Design', 'Develop', 'Deliver']
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -16,8 +16,8 @@ export function Footer() {
               <span>Bloomskill Tech</span>
             </Link>
             <p className="footer-blurb">
-              Catalyzing growth through ingenuity — at the intersection of technology and
-              imagination.
+              A digital product studio in Salem. One team from strategy to shipped product —
+              no handoffs.
             </p>
           </div>
           <div>
@@ -28,9 +28,9 @@ export function Footer() {
             <Link to="/contact">Contact</Link>
           </div>
           <div>
-            <h4>Practices</h4>
+            <h4>The 4D framework</h4>
             {PRACTICES.map((p) => (
-              <Link key={p} to="/#services">
+              <Link key={p} to="/services">
                 {p}
               </Link>
             ))}

@@ -13,8 +13,8 @@ export interface ThemeState {
 }
 
 export const DEFAULT_THEME: ThemeState = {
-  mode: 'dark',
-  palette: 'spectrum',
+  mode: 'light',
+  palette: 'verdant',
   font: 'grotesk',
   radius: 'soft',
 }
